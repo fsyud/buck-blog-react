@@ -4,9 +4,10 @@
     "start": "umi dev",
     "build": "umi build",
     "test": "umi test",
-    "lint:es": "eslint --ext .js src mock tests",
+    "lint:es": "eslint --ext .js,.jsx,.ts,.tsx src mock",
     "lint:ts": "tslint \"src/**/*.ts\" \"src/**/*.tsx\"",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less"
   },
   "dependencies": {
     "dva": "^2.6.0-beta.6",
@@ -19,6 +20,7 @@
     "@types/react": "^16.7.18",
     "@types/react-dom": "^16.0.11",
     "@types/react-test-renderer": "^16.0.3",
+    "@umijs/fabric": "^1.2.12",
     "babel-eslint": "^9.0.0",
     "eslint": "^5.4.0",
     "eslint-config-umi": "^1.4.0",
@@ -27,8 +29,11 @@
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.11.1",
     "husky": "^0.14.3",
-    "lint-staged": "^7.2.2",
+    "lint-staged": "^7.3.0",
+    "path": "^0.12.7",
+    "prettier": "^1.19.1",
     "react-test-renderer": "^16.7.0",
+    "stylelint": "^12.0.0",
     "tslint": "^5.12.0",
     "tslint-eslint-rules": "^5.4.0",
     "tslint-react": "^3.6.0",
@@ -36,9 +41,22 @@
     "umi-plugin-react": "^1.8.0",
     "umi-types": "^0.3.0"
   },
+  "checkFiles": [
+    "src/**/*.js*",
+    "src/**/*.ts*",
+    "src/**/*.less",
+    "config/**/*.js*",
+    "scripts/**/*.js"
+  ],
   "lint-staged": {
-    "*.{ts,tsx}": ["tslint --fix", "git add"],
-    "*.{js,jsx}": ["eslint --fix", "git add"]
+    "*.{ts,tsx}": [
+      "tslint --fix",
+      "git add"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "engines": {
     "node": ">=8.0.0"
