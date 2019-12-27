@@ -2,19 +2,6 @@
 .layouts {
   font-family: Georgia, sans-serif;
 
-  .header {
-    background: @base-color;
-    padding: 0 100px;
-    height: 71px;
-    margin-bottom: 10px;
-  }
-
-  .logo {
-    img {
-      height: 71px;
-    }
-  }
-
   .ant-menu {
     float: left;
   }
@@ -28,7 +15,8 @@
 
     .sider {
       background: @base-color;
-      width: 100%;
+      width: 100% !important;
+      max-width: 100% !important;
       height: 100%;
       margin-left: 10px;
     }
@@ -37,7 +25,8 @@
   .footer {
     // background: @base-color;
     margin-top: 10px;
-    border: 1px black solid;
+    text-align: center;
+    background: @base-color;
   }
 }
 

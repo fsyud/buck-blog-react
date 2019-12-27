@@ -39,8 +39,10 @@ const config: IConfig = {
   ],
   alias: {
     '@': path.resolve(__dirname, '../src'),
-    'assets': path.resolve(__dirname, '../src/assets')
-  }
+    'assets': path.resolve(__dirname, '../src/assets'),
+    'components': path.resolve(__dirname, '../src/components')
+  },
+  publicPath: './'
 };
 
 export default config;

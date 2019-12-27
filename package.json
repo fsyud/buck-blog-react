@@ -10,10 +10,12 @@
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less"
   },
   "dependencies": {
-    "dva": "^2.6.0-beta.6",
     "antd": "^3.19.5",
+    "dva": "^2.6.0-beta.6",
+    "express": "^4.17.1",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "umi-request": "^1.2.17"
   },
   "devDependencies": {
     "@types/jest": "^23.3.12",
