@@ -22,8 +22,8 @@ const routes = [
         path: '/',
         component: require('../index').default,
         exact: true,
-        _title: 'Buck-blog-react',
-        _title_default: 'Buck-blog-react',
+        _title: 'singleBuck',
+        _title_default: 'singleBuck',
       },
       {
         component: () =>
@@ -32,12 +32,12 @@ const routes = [
               .default,
             { pagesPath: 'src/pages', hasRoutesInConfig: true },
           ),
-        _title: 'Buck-blog-react',
-        _title_default: 'Buck-blog-react',
+        _title: 'singleBuck',
+        _title_default: 'singleBuck',
       },
     ],
-    _title: 'Buck-blog-react',
-    _title_default: 'Buck-blog-react',
+    _title: 'singleBuck',
+    _title_default: 'singleBuck',
   },
   {
     component: () =>
@@ -46,8 +46,8 @@ const routes = [
           .default,
         { pagesPath: 'src/pages', hasRoutesInConfig: true },
       ),
-    _title: 'Buck-blog-react',
-    _title_default: 'Buck-blog-react',
+    _title: 'singleBuck',
+    _title_default: 'singleBuck',
   },
 ];
 window.g_routes = routes;

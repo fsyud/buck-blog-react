@@ -19,7 +19,7 @@ const config: IConfig = {
         antd: true,
         dva: true,
         dynamicImport: false,
-        title: 'Buck-blog-react',
+        title: 'singleBuck',
         dll: true,
         locale: {
           enable: true,

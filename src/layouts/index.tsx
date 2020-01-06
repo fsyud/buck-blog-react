@@ -25,7 +25,7 @@ const defaultFooterDom = (
   <Footer className={styles.footer}>
     <Row>
       <Col span={12} offset={6}>
-        @2019 ｜ 全栈：singlebuck
+        ©2019 ｜ 全栈：singlebuck
       </Col>
     </Row>
   </Footer>
@@ -37,7 +37,9 @@ const BasicLayout: React.FC = props => {
       <BlogHeader />
       <Layout className={styles.layouts_second}>
         <Col span={17}>
-          <Content className={styles.content}>{props.children}</Content>
+          <Content className={styles.content}>
+            {props.children}
+          </Content>
         </Col>
         <Col span={7}>
           <Sider className={styles.sider}></Sider>
