@@ -20,7 +20,7 @@ export function _onCreate() {
     app.use(plugin);
   });
   
-  
+  app.model({ namespace: 'layoutmodel', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/layoutmodel.ts').default) });
   return app;
 }
 

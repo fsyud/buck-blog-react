@@ -1,20 +1,18 @@
-import React from 'react';
-import styles from './index.css';
-import { formatMessage } from 'umi-plugin-locale';
-export default function() {
-  return (
-    <div className={styles.normal}>
-      <div className={styles.welcome} />
-      <ul className={styles.list}>
-        <li>
-          To get started, edit <code>src/pages/index.js</code> and save to reload.
-        </li>
-        <li>
-          <a href="https://umijs.org/guide/getting-started.html">
-            {formatMessage({ id: 'index.start' })}
-          </a>
-        </li>
-      </ul>
-    </div>
-  );
+import React, { Component } from 'react';
+import { Result, Icon, Button } from 'antd';
+
+class Users extends Component<{}> {
+  render() {
+    return (
+      <div>
+        <Result
+          icon={<Icon type="smile" theme="twoTone" />}
+          title="Great, we have done all the operations!"
+          extra={<Button type="primary">Next</Button>}
+        />,
+      </div>
+    )
+  }
 }
+
+export default Users

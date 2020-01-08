@@ -1,20 +1,23 @@
-import React, { PureComponent }from 'react'
+import React from 'react'
 import {
   Layout, Menu, Row, Col, Badge, Avatar, Dropdown, Icon, message
 } from 'antd'
 import { connect } from 'dva'
-import { Dispatch } from 'redux'
+import Link from 'umi/link';
+import { CurrentUser } from './data.d';
+import { ConnectProps } from '@/models/connect';
+import { StateType } from '@/models/layoutmodel'
+
 import styles from './index.less'
+
 import logo from '@/assets/icon/buck.png'
 import sculpture from '@/assets/avatar/cat.jpeg'
 
+export interface HeaderRightProps extends ConnectProps {
+  currentUser?: CurrentUser;
+}
 
 const { Header } = Layout
-
-export interface BlogHeaderDataItems {
-  avatar?: string;
-  dispatch: Dispatch<any>;
-}
 
 const onClick = ({ key }) => {
   message.info(`Click on item ${key}`);
@@ -43,18 +46,16 @@ const menu = (
 
 // 需定义 class 组件，需要继承 React.Component：
 // 我们强烈建议你不要创建自己的组件基类。 在 React 组件中，代码重用的主要方式是组合而不是继承。
-class BlogHeader extends PureComponent<BlogHeaderDataItems> {
-  componentDidMount () {
-    const { dispatch } = this.props
+class BlogHeader extends React.Component<HeaderRightProps> {
+  componentDidMount() {
+    const { dispatch } = this.props;
     dispatch({
-      type: 'blogheader/fetch'
-    })
-
-    console.log('dispatch')
+      type: 'accountCenter/fetchCurrent',
+    });
   }
 
-  render () {
-    console.log(this.props)
+  render() {
+    const { currentUser = {},} = this.props;
     return (
       <Header className={styles.header}>
         <Row>
@@ -66,11 +67,20 @@ class BlogHeader extends PureComponent<BlogHeaderDataItems> {
               theme="light"
               mode="horizontal"
               defaultSelectedKeys={['1']}
-              style={{ lineHeight: '70px',  borderBottom: 'none'}}
+              style={{ lineHeight: '70px', borderBottom: 'none' }}
             >
-              <Menu.Item key="1">文章</Menu.Item>
-              <Menu.Item key="2">关于</Menu.Item>
-              <Menu.Item key="3">个人</Menu.Item>
+              <Menu.Item key="1">
+                <Link to={''}>
+                  首页
+                </Link>
+              </Menu.Item>
+              <Menu.Item key="2">文章</Menu.Item>
+              <Menu.Item key="3">关于</Menu.Item>
+              <Menu.Item key="4">
+                <Link to={'/user'}>
+                  个人
+                </Link>
+              </Menu.Item>
             </Menu>
           </Col>
           <Col span={6}>
@@ -82,7 +92,7 @@ class BlogHeader extends PureComponent<BlogHeaderDataItems> {
               </span>
               <Dropdown overlay={menu} >
                 <a className={styles.dropLink} href="#">
-                  个人中心<Icon type="down" />
+                  {currentUser.name}<Icon type="down" />
                 </a>
               </Dropdown>
             </div>
@@ -93,7 +103,7 @@ class BlogHeader extends PureComponent<BlogHeaderDataItems> {
   }
 }
 
-// export default Products;
-export default connect(({ blogheader }: { blogheader: any }) => ({
-  blogheader,
+// export default BlogHeader;
+export default connect(({ accountCenter }: { accountCenter: StateType }) => ({
+  currentUser: accountCenter.currentUser,
 }))(BlogHeader);
