@@ -3,8 +3,8 @@ import {
   Layout, Menu, Row, Col, Badge, Avatar, Dropdown, Icon, message
 } from 'antd'
 import { connect } from 'dva'
-import Link from 'umi/link';
-import { CurrentUser } from './data.d';
+import BlogMenu from './../blogmenu'
+import { CurrentUser } from '@/models/common.d';
 import { ConnectProps } from '@/models/connect';
 import { StateType } from '@/models/layoutmodel'
 
@@ -52,6 +52,9 @@ class BlogHeader extends React.Component<HeaderRightProps> {
     dispatch({
       type: 'accountCenter/fetchCurrent',
     });
+    dispatch({
+      type: 'accountCenter/fetchNavList',
+    });
   }
 
   render() {
@@ -63,25 +66,7 @@ class BlogHeader extends React.Component<HeaderRightProps> {
             {defaultLogoDom}
           </Col>
           <Col span={14}>
-            <Menu
-              theme="light"
-              mode="horizontal"
-              defaultSelectedKeys={['1']}
-              style={{ lineHeight: '70px', borderBottom: 'none' }}
-            >
-              <Menu.Item key="1">
-                <Link to={''}>
-                  首页
-                </Link>
-              </Menu.Item>
-              <Menu.Item key="2">文章</Menu.Item>
-              <Menu.Item key="3">关于</Menu.Item>
-              <Menu.Item key="4">
-                <Link to={'/user'}>
-                  个人
-                </Link>
-              </Menu.Item>
-            </Menu>
+            <BlogMenu />
           </Col>
           <Col span={6}>
             <div className={styles.userInfo}>

@@ -3,6 +3,12 @@ export interface TagVerb {
   label?: string;
 }
 
+export interface NavType {
+  article?: string;
+  router?: string,
+  key?: string
+}
+
 export interface CurrentUser {
   name?: string;
   avatar?: string;
@@ -11,4 +17,10 @@ export interface CurrentUser {
   signature?: string;
   title?: string;
   tags?: TagVerb[]
+}
+
+export interface CurrNav {
+  types?: string;
+  state?: boolean;
+  list?: NavType[]
 }

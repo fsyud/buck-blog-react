@@ -5,3 +5,10 @@ export async function queryUserInfo() {
     method: 'GET'
   })
 }
+
+export async function queryNavList(params: any) {
+  return request('/api/navItems', {
+    method: 'POST',
+    data: params
+  })
+}

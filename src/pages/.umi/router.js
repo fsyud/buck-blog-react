@@ -16,12 +16,47 @@ const Router = routerRedux.ConnectedRouter;
 const routes = [
   {
     path: '/',
-    component: require('../../layouts/index').default,
+    component: require('../../layouts/index.tsx').default,
     routes: [
       {
-        path: '/',
-        component: require('../index').default,
+        path: '/buckArticle',
         exact: true,
+        component: require('../buckArticle/index.tsx').default,
+        _title: 'singleBuck',
+        _title_default: 'singleBuck',
+      },
+      {
+        path: '/buckBoard',
+        exact: true,
+        component: require('../buckBoard/index.tsx').default,
+        _title: 'singleBuck',
+        _title_default: 'singleBuck',
+      },
+      {
+        path: '/buckCenter',
+        exact: true,
+        component: require('../buckCenter/index.tsx').default,
+        _title: 'singleBuck',
+        _title_default: 'singleBuck',
+      },
+      {
+        path: '/buckCourse',
+        exact: true,
+        component: require('../buckCourse/index.tsx').default,
+        _title: 'singleBuck',
+        _title_default: 'singleBuck',
+      },
+      {
+        path: '/buckItem',
+        exact: true,
+        component: require('../buckItem/index.tsx').default,
+        _title: 'singleBuck',
+        _title_default: 'singleBuck',
+      },
+      {
+        path: '/',
+        exact: true,
+        component: require('../index.tsx').default,
         _title: 'singleBuck',
         _title_default: 'singleBuck',
       },
@@ -30,7 +65,7 @@ const routes = [
           React.createElement(
             require('/Volumes/WorkSpace/Buck-blog-react/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
               .default,
-            { pagesPath: 'src/pages', hasRoutesInConfig: true },
+            { pagesPath: 'src/pages', hasRoutesInConfig: false },
           ),
         _title: 'singleBuck',
         _title_default: 'singleBuck',
@@ -44,7 +79,7 @@ const routes = [
       React.createElement(
         require('/Volumes/WorkSpace/Buck-blog-react/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
           .default,
-        { pagesPath: 'src/pages', hasRoutesInConfig: true },
+        { pagesPath: 'src/pages', hasRoutesInConfig: false },
       ),
     _title: 'singleBuck',
     _title_default: 'singleBuck',

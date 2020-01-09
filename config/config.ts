@@ -4,13 +4,20 @@ import path from 'path'
 // ref: https://umijs.org/config/
 const config: IConfig = {
   treeShaking: true,
-  routes: [
-    {
-      path: '/',
-      component: '../layouts/index',
-      routes: [{ path: '/', component: '../pages/index' }],
-    },
-  ],
+  // routes: [
+  //   {
+  //     path: '/',
+  //     component: '../layouts/index',
+  //     routes: [{ path: '/', component: '../pages/index' }],
+  //   },
+  // ],
+  // 浏览器兼容版本
+  targets: {
+    android: 5,
+    ios: 7,
+    chrome: 58,
+    ie: 9,
+  },
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     [

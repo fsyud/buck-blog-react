@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Result, Button } from 'antd';
 
-class Users extends Component<{}> {
+class buckCourse extends Component<{}> {
   render() {
     return (
       <div>
@@ -21,4 +21,4 @@ class Users extends Component<{}> {
   }
 }
 
-export default Users
+export default buckCourse

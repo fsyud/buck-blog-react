@@ -1,4 +1,5 @@
 import './polyfills';
+import 'intl';
 import history from './history';
 
 import React from 'react';
