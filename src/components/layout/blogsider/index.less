@@ -1,0 +1,34 @@
+@base-color: #fff;
+@-o-keyframes mylogo {
+  0% {
+    transform: rotate(0deg) scale(0.8, 0.8);
+    opacity: 1;
+  }
+  25% {
+    transform: rotate(0deg) scale(1, 1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: rotate(0deg) scale(0.8, 0.8);
+    opacity: 1;
+  }
+}
+.sider {
+  background: @base-color;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: 100%;
+  border-left: 1px rgb(226, 228, 230) solid;
+  text-align: center;
+  padding-top: 100px;
+
+  .avatar_animate {
+    width: 130px;
+    border-radius: 50%;
+    animation: mylogo 3s;
+    -moz-animation: mylogo 3s; /* Firefox */
+    -webkit-animation: mylogo 3s; /* Safari and Chrome */
+    -o-animation: mylogo 3s; /* Opera */
+    animation-iteration-count: infinite;
+  }
+}

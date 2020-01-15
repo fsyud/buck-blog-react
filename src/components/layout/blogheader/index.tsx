@@ -15,6 +15,7 @@ import sculpture from '@/assets/avatar/cat.jpeg'
 
 export interface HeaderRightProps extends ConnectProps {
   currentUser?: CurrentUser;
+  currPath?: string;
 }
 
 const { Header } = Layout
@@ -58,15 +59,16 @@ class BlogHeader extends React.Component<HeaderRightProps> {
   }
 
   render() {
-    const { currentUser = {},} = this.props;
+    const { currentUser = {}, currPath } = this.props;
+
     return (
       <Header className={styles.header}>
         <Row>
-          <Col span={4}>
+          <Col span={3}>
             {defaultLogoDom}
           </Col>
-          <Col span={14}>
-            <BlogMenu />
+          <Col span={15}>
+            <BlogMenu  menuSelect={currPath}/>
           </Col>
           <Col span={6}>
             <div className={styles.userInfo}>

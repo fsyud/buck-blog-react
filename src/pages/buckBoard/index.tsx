@@ -12,6 +12,11 @@ const fieldLabels = {
   content: '内容'
 };
 
+const formItemLayout = {
+  labelCol: { span: 4 },
+  wrapperCol: { span: 20 }
+}
+
 interface FormBoardFormProps extends FormComponentProps {
   dispatch: Dispatch<any>;
   submitting: boolean;
@@ -30,13 +35,14 @@ class buckBoard extends Component<FormBoardFormProps> {
       }
     });
   };
+
   render() {
     const { form, submitting } = this.props;
     const { getFieldDecorator } = form;
     return (
       <Card title="留言板" className={styles.board} bordered={false}>
-        <Form layout="horizontal" hideRequiredMark className={styles.loginForm}>
-          <Form.Item label={fieldLabels.email}>
+        <Form hideRequiredMark className={styles.loginForm}>
+          <Form.Item { ...formItemLayout } label={fieldLabels.email}>
             {getFieldDecorator('email', {
               rules: [{ required: true, message: '邮箱不能为空' }],
             })(<Input
@@ -44,7 +50,7 @@ class buckBoard extends Component<FormBoardFormProps> {
               placeholder="请输入邮箱名称" />
             )}
           </Form.Item>
-          <Form.Item label={fieldLabels.phone}>
+          <Form.Item { ...formItemLayout } label={fieldLabels.phone}>
             {getFieldDecorator('phone', {
               rules: [{ required: true, message: '手机号不能为空' }],
             })(<Input
@@ -52,7 +58,7 @@ class buckBoard extends Component<FormBoardFormProps> {
               placeholder="请输入手机号" />
             )}
           </Form.Item>
-          <Form.Item label={fieldLabels.name}>
+          <Form.Item { ...formItemLayout } label={fieldLabels.name}>
             {getFieldDecorator('name', {
               rules: [{ required: true, message: '名字不能为空' }],
             })(<Input
@@ -60,7 +66,7 @@ class buckBoard extends Component<FormBoardFormProps> {
               placeholder="请输入名字" />
             )}
           </Form.Item>
-          <Form.Item label={fieldLabels.content}>
+          <Form.Item { ...formItemLayout } label={fieldLabels.content}>
             {getFieldDecorator('content', {
               rules: [{ required: true, message: '内容不能为空' }],
             })(<Input

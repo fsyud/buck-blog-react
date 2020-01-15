@@ -1,12 +1,13 @@
 export interface TagVerb {
   key?: string;
+  color?: string;
   label?: string;
 }
 
 export interface NavType {
   article?: string;
   router?: string,
-  key?: string
+  key?: string;
 }
 
 export interface CurrentUser {
@@ -16,11 +17,29 @@ export interface CurrentUser {
   email?: string;
   signature?: string;
   title?: string;
-  tags?: TagVerb[]
+  tags?: TagVerb[];
 }
 
 export interface CurrNav {
   types?: string;
   state?: boolean;
-  list?: NavType[]
+  list?: NavType[];
+}
+
+export interface lineList {
+  state?: number;
+  _id?: string;
+  title?: string;
+  content?: string;
+  start_time?: string;
+  end_time?: string;
+}
+
+export interface TimeLine {
+  code?: number;
+  message?: string,
+  data: {
+    count?: number;
+    list: lineList[];
+  }
 }

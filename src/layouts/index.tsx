@@ -3,8 +3,9 @@ import styles from './index.less'
 import Link from 'umi/link'
 import { Layout, Row, Col, Result, Button } from 'antd'
 import BlogHeader from '@/components/layout/blogheader'
+import BlogSider from '@/components/layout/blogsider'
 
-const { Footer, Sider, Content } = Layout;
+const { Footer, Content } = Layout;
 
 // 全局定义403错误页面
 // FC = Functional Component
@@ -31,19 +32,26 @@ const defaultFooterDom = (
   </Footer>
 )
 
-const BasicLayout: React.FC = props => {
+export interface BasicLayoutProps {
+  location?: any
+}
+
+const BasicLayout: React.FC<BasicLayoutProps> = props => {
+  let isShowSlider = false;
+  const { pathname } = props.location
+
+  isShowSlider = !pathname.includes('buckCenter')
+
   return (
     <Layout className={styles.layouts}>
-      <BlogHeader />
+      <BlogHeader currPath={pathname} />
       <Layout className={styles.layouts_second}>
-        <Col span={17}>
+        <Col span={ isShowSlider ? 17 : 24 }>
           <Content className={styles.content}>
             {props.children}
           </Content>
         </Col>
-        <Col span={7}>
-          <Sider className={styles.sider}></Sider>
-        </Col>
+        { isShowSlider ? (<Col span={7}><BlogSider /></Col>) : ('') }
       </Layout>
       {defaultFooterDom}
     </Layout>

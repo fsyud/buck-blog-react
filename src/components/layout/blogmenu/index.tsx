@@ -1,17 +1,29 @@
 import React from 'react'
-import { Menu } from 'antd'
+import { Menu, Spin } from 'antd'
 import { connect } from 'dva'
 import Link from 'umi/link';
-import { StateType } from '@/models/layoutmodel'
+import { CurrNav } from '@/models/common.d'
+import { RouteChildrenProps } from 'react-router';
+
+interface StateType extends RouteChildrenProps {
+  currNav?: Partial<CurrNav>;
+  menuSelect?: string
+}
 
 const BlogMenu: React.FC<Partial<StateType>> = props => {
-  const { currNav } = props
+  const { currNav, menuSelect} = props
   const { list } = currNav
+
+  const defaultSelect = list
+    && list.filter(s => s.router.includes(menuSelect))[0].key
+
+  if(!defaultSelect) return (<div><Spin /></div>)
+
   return (
     <Menu
       theme="light"
       mode="horizontal"
-      defaultSelectedKeys={['1']}
+      defaultSelectedKeys={[defaultSelect]}
       style={{ lineHeight: '70px', borderBottom: 'none' }}
     >
       {list &&
