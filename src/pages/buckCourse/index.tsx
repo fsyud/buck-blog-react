@@ -4,13 +4,15 @@ import { connect } from 'dva'
 import { TimeLine } from '@/models/common.d'
 import { ConnectProps } from '@/models/connect';
 import { TimeLineState } from '@/models/timelinemodel'
+import { RandomColor } from '@/constant/_common'
+
 import styles from './index.less'
 
-export interface HeaderRightProps extends ConnectProps {
+export interface buckCourseProps extends ConnectProps {
   currentLine?: TimeLine;
 }
 
-class buckCourse extends React.Component<HeaderRightProps> {
+class buckCourse extends React.Component<buckCourseProps> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
@@ -23,9 +25,17 @@ class buckCourse extends React.Component<HeaderRightProps> {
 
     const { data } = currentLine
 
-    if(!data) return (<div><Spin /></div>)
+    if(!data) return (<div className={styles.Spin}><Spin /></div>)
 
     const curLineList = data.list
+
+    curLineList.map(s => {
+      let curColor = RandomColor[Math.floor(
+        Math.random() * (RandomColor.length + 1)
+      )]
+      s.color = curColor
+      return s
+    })
 
     return (
       <div>
@@ -37,7 +47,7 @@ class buckCourse extends React.Component<HeaderRightProps> {
                 color={ item.state === 3 ? 'green' : 'blue' }
               >
                 <div className={styles.line_content}>
-                  <h3>{item.title}</h3>
+                  <h3 style={{ 'color': item.color }}>{item.title}</h3>
                   <p>{item.content}</p>
                   <p>
                     <span>

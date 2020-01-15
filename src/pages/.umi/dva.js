@@ -21,6 +21,7 @@ export function _onCreate() {
   });
   
   app.model({ namespace: 'layoutmodel', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/layoutmodel.ts').default) });
+app.model({ namespace: 'projectmodel', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/projectmodel.ts').default) });
 app.model({ namespace: 'timelinemodel', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/timelinemodel.ts').default) });
   return app;
 }

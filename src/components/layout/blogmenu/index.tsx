@@ -4,6 +4,7 @@ import { connect } from 'dva'
 import Link from 'umi/link';
 import { CurrNav } from '@/models/common.d'
 import { RouteChildrenProps } from 'react-router';
+import styles from './index.less'
 
 interface StateType extends RouteChildrenProps {
   currNav?: Partial<CurrNav>;
@@ -17,7 +18,7 @@ const BlogMenu: React.FC<Partial<StateType>> = props => {
   const defaultSelect = list
     && list.filter(s => s.router.includes(menuSelect))[0].key
 
-  if(!defaultSelect) return (<div><Spin /></div>)
+  if(!defaultSelect) return (<div className={styles.Spin}><Spin /></div>)
 
   return (
     <Menu

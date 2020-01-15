@@ -27,6 +27,7 @@ export interface CurrNav {
 }
 
 export interface lineList {
+  color?: string;
   state?: number;
   _id?: string;
   title?: string;
@@ -41,5 +42,24 @@ export interface TimeLine {
   data: {
     count?: number;
     list: lineList[];
+  }
+}
+
+export interface ProjectList {
+  _id?: string;
+  title?: string;
+  content?: string;
+  start_time?: string;
+  end_time?: string;
+  img?: string;
+  url?: string;
+}
+
+export interface Project {
+  code?: number;
+  message?: string,
+  data: {
+    count?: number;
+    list: ProjectList[];
   }
 }

@@ -1,7 +1,32 @@
 .board {
   padding: 5px;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+
+  :global {
+    .ant-card {
+      // box-shadow: 0 2px 12px 0 rgba(0, 0, 0, .1);
+
+      .ant-card-head {
+        border-bottom: none;
+
+        .ant-card-head-wrapper {
+          color: #fa8c16;
+          font-size: 20px;
+        }
+
+      }
+
+      .ant-card-body {
+        display: flex;
+        justify-content: center;
+      }
+    }
+  }
 
   .loginForm {
     max-width: 500px;
   }
+
 }
