@@ -1,8 +1,9 @@
 import React from 'react'
 import {
-  Layout, Menu, Row, Col, Badge, Avatar, Dropdown, Icon, message
+  Layout, Menu, Row, Col, Badge, Avatar, Dropdown, message, Button
 } from 'antd'
 import { connect } from 'dva'
+import { UserAddOutlined, UserOutlined } from '@ant-design/icons';
 import BlogMenu from './../blogmenu'
 import { CurrentUser } from '@/models/common.d';
 import { ConnectProps } from '@/models/connect';
@@ -45,6 +46,9 @@ const menu = (
   </Menu>
 )
 
+
+
+
 // 需定义 class 组件，需要继承 React.Component：
 // 我们强烈建议你不要创建自己的组件基类。 在 React 组件中，代码重用的主要方式是组合而不是继承。
 class BlogHeader extends React.Component<HeaderRightProps> {
@@ -60,6 +64,11 @@ class BlogHeader extends React.Component<HeaderRightProps> {
 
   render() {
     const { currentUser = {}, currPath } = this.props;
+
+
+    const userRegister = (e): void => {
+      console.log(e)
+    }
 
     return (
       <Header className={styles.header}>
@@ -77,11 +86,22 @@ class BlogHeader extends React.Component<HeaderRightProps> {
                   <Avatar src={sculpture} shape="square" icon="user" />
                 </Badge>
               </span>
-              <Dropdown overlay={menu} >
+              <Button
+                type="primary"
+                onClick={userRegister}
+              >
+                <UserAddOutlined />
+                注册
+              </Button>
+              <Button>
+                <UserOutlined />
+                登录
+              </Button>
+              {/* <Dropdown overlay={menu} >
                 <a className={styles.dropLink} href="#">
                   {currentUser.name}<Icon type="down" />
                 </a>
-              </Dropdown>
+              </Dropdown> */}
             </div>
           </Col>
         </Row>

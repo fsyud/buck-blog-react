@@ -143,5 +143,50 @@ export default {
         }
       ]
     }
+  },
+  'GET /api/currentArticleList': {
+    count: 3,
+    message: '操作成功！',
+    data: [
+      {
+        meta: {
+          views: 500,
+          likes: 2
+        },
+        desc: '2020 暴富暴富，何以解忧，唯有暴富',
+        img_url: 'https://upload-images.jianshu.io/upload_images/12890819-d2f96122f7248ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        tags: ['1'],
+        category: ['1'],
+        _id: '1',
+        title: '我的2020年 -- 少而好学，如日出之阳；壮而好学，如日中之光；老而好学，如炳烛之明。',
+        create_time: '2020-1-16T14:08:20.329Z'
+      },
+      {
+        meta: {
+          views: 500,
+          likes: 2
+        },
+        desc: '2020 暴富暴富，何以解忧，唯有暴富',
+        img_url: 'https://upload-images.jianshu.io/upload_images/12890819-d2f96122f7248ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        tags: ['2'],
+        category: ['2'],
+        _id: '2',
+        title: '我的2020年 -- 少而好学，如日出之阳；壮而好学，如日中之光；老而好学，如炳烛之明。',
+        create_time: '2020-1-16T14:08:20.329Z'
+      },
+      {
+        meta: {
+          views: 500,
+          likes: 2
+        },
+        desc: '2020 暴富暴富，何以解忧，唯有暴富',
+        img_url: 'https://upload-images.jianshu.io/upload_images/12890819-d2f96122f7248ee9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240',
+        tags: ['3'],
+        category: ['3'],
+        _id: '3',
+        title: '我的2020年 -- 少而好学，如日出之阳；壮而好学，如日中之光；老而好学，如炳烛之明。',
+        create_time: '2020-1-16T14:08:20.329Z'
+      }
+    ]
   }
 }

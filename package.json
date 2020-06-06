@@ -10,9 +10,11 @@
     "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.2.1",
     "antd": "^3.26.6",
     "dva": "^2.6.0-beta.6",
     "express": "^4.17.1",
+    "lodash": "^4.17.15",
     "react": "^16.8.6",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.8.6",
@@ -53,6 +55,11 @@
     "config/**/*.js*",
     "scripts/**/*.js"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint-staged"
+    }
+  },
   "lint-staged": {
     "*.{ts,tsx}": [
       "tslint --fix",

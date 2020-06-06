@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { Result, Button } from 'antd';
 
-class buckCenter extends Component<{}> {
-  render() {
-    return (
-      <div>
+const buckCenter:React.FC<{}> =() => {
+
+  useEffect(() => {
+    console.log('test')
+  }, [])
+
+  return (
+    <div>
         <Result
           status="success"
           title="Successfully Purchased Cloud Server ECS!"
@@ -17,8 +21,7 @@ class buckCenter extends Component<{}> {
           ]}
         />,
       </div>
-    )
-  }
+  )
 }
 
 export default buckCenter

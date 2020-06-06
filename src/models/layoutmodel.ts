@@ -4,8 +4,8 @@ import { queryUserInfo, queryNavList } from '@/service/layoutservice'
 import { CurrentUser, CurrNav } from './common.d'
 
 export interface StateType {
-  currentUser?: Partial<CurrentUser>;
-  currNav?: Partial<CurrNav>;
+  currentUser?: CurrentUser;
+  currNav?: CurrNav;
 }
 
 export interface ModelType {
