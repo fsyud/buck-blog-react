@@ -4,6 +4,7 @@ import { connect } from 'dva'
 import { StateType } from '@/models/layoutmodel'
 import { RandomColor } from '@/constant/_common'
 import styles from './index.less'
+import { UserOutlined } from '@ant-design/icons'
 import sculpture from '@/assets/avatar/cat.jpeg'
 
 const { Sider } = Layout
@@ -34,7 +35,7 @@ const BlogSider: React.FC<Partial<StateType>> = props => {
         className={ styles.avatar_animate }
         src={sculpture}
         size={130}
-        icon="user"
+        icon={<UserOutlined />}
       />
       <h4>标签云</h4>
       <div>

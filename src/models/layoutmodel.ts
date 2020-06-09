@@ -1,6 +1,6 @@
 import { Reducer} from 'redux'
 import { Effect } from 'dva'
-import { queryUserInfo, queryNavList } from '@/service/layoutservice'
+import { queryUserInfo, queryNavList, queryRegister } from '@/service/layoutservice'
 import { CurrentUser, CurrNav } from './common.d'
 
 export interface StateType {
@@ -13,7 +13,8 @@ export interface ModelType {
   state: StateType;
   effects: {
     fetchCurrent: Effect,
-    fetchNavList: Effect
+    fetchNavList: Effect,
+    fetchRegister: Effect
   };
   reducers: {
     saveCurrentUser: Reducer<StateType>;
@@ -41,7 +42,10 @@ const Model: ModelType = {
         type: 'getCurrNavs',
         payload: response,
       });
-    }
+    },
+    *fetchRegister({payload}, { call, put }) {
+      const response = yield call(queryRegister, payload);
+    },
   },
   reducers: {
     saveCurrentUser(state, action) {

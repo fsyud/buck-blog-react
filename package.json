@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
-    "antd": "^3.26.6",
+    "antd": "^4.3.3",
     "dva": "^2.6.0-beta.6",
     "express": "^4.17.1",
     "lodash": "^4.17.15",

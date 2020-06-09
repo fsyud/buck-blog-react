@@ -1,16 +1,11 @@
-import { IConfig } from 'umi-types';
+import { IConfig } from 'umi-types'
 import path from 'path'
+import proxy from './proxy'
+const { REACT_APP_ENV } = process.env
 
 // ref: https://umijs.org/config/
 const config: IConfig = {
   treeShaking: true,
-  // routes: [
-  //   {
-  //     path: '/',
-  //     component: '../layouts/index',
-  //     routes: [{ path: '/', component: '../pages/index' }],
-  //   },
-  // ],
   // 浏览器兼容版本
   targets: {
     android: 5,
@@ -49,7 +44,8 @@ const config: IConfig = {
     'assets': path.resolve(__dirname, '../src/assets'),
     'components': path.resolve(__dirname, '../src/components')
   },
-  publicPath: './'
+  publicPath: './',
+  proxy: proxy[REACT_APP_ENV || 'dev'],
 };
 
 export default config;

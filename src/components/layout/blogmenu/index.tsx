@@ -15,8 +15,6 @@ const BlogMenu: React.FC<Partial<StateType>> = props => {
   const { currNav, menuSelect} = props
   const { list } = currNav
 
-  console.log(list)
-
   const defaultSelect = list
     && list.filter(s => s.router.includes(menuSelect))[0].key
 

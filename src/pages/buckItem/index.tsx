@@ -26,8 +26,6 @@ class buckItem extends React.Component<ProjectProps> {
 
     const { data } = currentProject
 
-    console.log(this.props)
-
     if (!data) return (<div className={styles.Spin}><Spin /></div>)
 
     const curProjectList = data.list
