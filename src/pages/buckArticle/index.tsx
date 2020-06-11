@@ -7,14 +7,8 @@ class buckArticle extends Component<{}> {
       <div>
         <Result
           status="success"
-          title="Successfully Purchased Cloud Server ECS!"
-          subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
-          extra={[
-            <Button type="primary" key="console">
-              Go Consoles
-            </Button>,
-            <Button key="buy">Buy Again</Button>,
-          ]}
+          title="正在开发"
+          subTitle="请等待！"
         />,
       </div>
     )

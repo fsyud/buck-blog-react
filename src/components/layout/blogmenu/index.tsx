@@ -7,13 +7,13 @@ import { RouteChildrenProps } from 'react-router';
 import styles from './index.less'
 
 interface StateType extends RouteChildrenProps {
-  currNav?: Partial<CurrNav>;
+  NavList?: Partial<CurrNav>;
   menuSelect?: string
 }
 
 const BlogMenu: React.FC<Partial<StateType>> = props => {
-  const { currNav, menuSelect} = props
-  const { list } = currNav
+  const { NavList, menuSelect} = props
+  const { list } = NavList
 
   const defaultSelect = list
     && list.filter(s => s.router.includes(menuSelect))[0].key
@@ -41,5 +41,5 @@ const BlogMenu: React.FC<Partial<StateType>> = props => {
 }
 
 export default connect(({ accountCenter }: { accountCenter: StateType }) => ({
-  currNav: accountCenter.currNav,
+  currNav: accountCenter.NavList,
 }))(BlogMenu);
