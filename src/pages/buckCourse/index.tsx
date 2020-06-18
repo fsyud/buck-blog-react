@@ -4,7 +4,6 @@ import { connect } from 'dva'
 import { TimeLine } from '@/models/common.d'
 import { ConnectProps } from '@/models/connect';
 import { TimeLineState } from '@/models/timelinemodel'
-import { RandomColor } from '@/constant/_common'
 
 import styles from './index.less'
 
@@ -28,14 +27,6 @@ class buckCourse extends React.Component<buckCourseProps> {
     if(!data) return (<div className={styles.Spin}><Spin /></div>)
 
     const curLineList = data.list
-
-    curLineList.map(s => {
-      let curColor = RandomColor[Math.floor(
-        Math.random() * (RandomColor.length + 1)
-      )]
-      s.color = curColor
-      return s
-    })
 
     return (
       <div>
