@@ -1,3 +1,5 @@
+import { Data } from "unist";
+
 export interface TagVerb {
   key?: string;
   color?: string;
@@ -36,6 +38,7 @@ export interface lineList {
   end_time?: string;
 }
 
+// 时间轴
 export interface TimeLine {
   code?: number;
   message?: string,
@@ -55,6 +58,7 @@ export interface ProjectList {
   url?: string;
 }
 
+// 项目
 export interface Project {
   code?: number;
   message?: string,
@@ -62,4 +66,56 @@ export interface Project {
     count?: number;
     list: ProjectList[];
   }
+}
+
+// 标签
+export interface tagList {
+  name: string;
+  desc?: string;
+  color?: string;
+  _id: string;
+}
+
+export interface tagDefine {
+  code?: number;
+  message?: string,
+  data: {
+    count?: number;
+    list: tagList[];
+  }
+}
+
+export interface articleMeta {
+  views: number;
+  likes: number;
+  comment: number;
+}
+
+export interface articleData {
+  meta: articleMeta[];
+  keyword: Array<[]>;
+  desc: string;
+  numbers: string;
+  img_url: string;
+  type: number;
+  state: number;
+  origin: number;
+  tags: Array<[]>;
+  comments: Array<[]>;
+  category: Array<[]>;
+  _id: string;
+  title: string;
+  author: string;
+  content: string;
+  like_users: Array<[]>;
+  create_time: Data;
+  updara_time: Data;
+  id: number;
+  __v: number;
+}
+
+export interface articleist {
+  code: number;
+  message: string;
+  data: articleData[]
 }

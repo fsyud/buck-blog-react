@@ -28,7 +28,6 @@ const Model: ModelType = {
   effects: {
     *fetchCurrentTimeLine(_, {call, put}) {
       const response = yield call(queryTimeLineInfo);
-      console.log(response)
       yield put({
         type: 'saveCurrenTimeLine',
         payload: response,
