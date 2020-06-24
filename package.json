@@ -14,10 +14,13 @@
     "antd": "^4.3.3",
     "dva": "^2.6.0-beta.6",
     "express": "^4.17.1",
+    "highlight.js": "^10.1.1",
     "lodash": "^4.17.15",
+    "marked": "^1.1.0",
     "react": "^16.8.6",
     "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.8.6",
+    "react-lazy-load": "^3.0.13",
     "react-router": "^5.1.2",
     "redux": "^4.0.5",
     "umi-request": "^1.2.17"

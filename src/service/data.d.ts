@@ -6,3 +6,15 @@ export interface registerParam {
   introduce: string;
   type?: number;
 }
+
+export interface addTagParam {
+  name: string;
+  desc?: string;
+  icon?: string
+}
+
+export interface addArticleParam {
+  title: string;
+  author: string;
+  content: string
+}

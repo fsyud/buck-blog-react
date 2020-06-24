@@ -1,58 +1,45 @@
-import { Reducer } from 'redux'
-import { Effect } from 'dva'
-import {
-  queryAddTag,
-  queryGetTagList
-} from '@/service/layoutservice'
-import { tagList } from './common.d'
+import { Reducer } from 'redux';
+import { Effect } from 'dva';
+import { queryArticleList } from '@/service/articleservice';
+import { articleList } from './common.d';
 
-export interface StateType {
-  tagList:  articleist[];
+export interface articleState {
+  articLeist?: Partial<articleList>;
 }
 
 export interface ModelType {
   namespace: string;
-  state: StateType;
+  state: articleState;
   effects: {
-    addTags: Effect,
-    getTagList: Effect
+    getArticleList: Effect;
   };
   reducers: {
-    getTagList: Reducer<StateType>
+    getArticle: Reducer<articleState>;
   };
 }
 
 const Model: ModelType = {
-  namespace: 'commonLayoutSpace',
+  namespace: 'articleSpace',
   state: {
-    tagList: []
+    articLeist: {},
   },
   effects: {
-    *addTags({payload}, { call, put }) {
-      const response = yield call(queryAddTag, payload);
-      console.log(response)
-    },
-    *getTagList({payload} , { call, put}) {
-      const response = yield call(queryGetTagList, payload);
-      if(response && response.data) {
-
-        console.log(response.data)
-
-        yield put({
-          type: 'getTagList',
-          payload: response.data.list || [],
-        });
-      }
+    *getArticleList({ payload }, { call, put }) {
+      const response = yield call(queryArticleList, payload);
+      yield put({
+        type: 'getArticle',
+        payload: response,
+      });
     },
   },
   reducers: {
-    getTagList(state, action) {
+    getArticle(state, action) {
       return {
-        ...state,
-        tagList: action.payload,
+        ...(state as articleState),
+        articLeist: action.payload,
       };
     },
-  }
-}
+  },
+};
 
-export default Model
+export default Model;

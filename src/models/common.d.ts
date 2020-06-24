@@ -91,8 +91,12 @@ export interface articleMeta {
   comment: number;
 }
 
-export interface articleData {
-  meta: articleMeta[];
+export interface articleDetailData {
+  meta: {
+    views: number;
+    likes: number;
+    comments: number;
+  };
   keyword: Array<[]>;
   desc: string;
   numbers: string;
@@ -114,8 +118,26 @@ export interface articleData {
   __v: number;
 }
 
-export interface articleist {
+export interface artDataList {
+  meta: {
+    views: number;
+    likes: number;
+    comments: number;
+  };
+  desc: string;
+  img_url: string;
+  tags: Array<[]>;
+  category: Array<[]>;
+  _id: string;
+  title: string;
+  create_time: Data;
+}
+
+export interface articleList {
   code: number;
   message: string;
-  data: articleData[]
+  data: {
+    count: number;
+    list?: artDataList[];
+  }
 }

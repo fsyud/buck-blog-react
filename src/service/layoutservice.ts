@@ -1,5 +1,8 @@
 import request from '@/utils/request'
-import { registerParam } from './data.d'
+import {
+  registerParam,
+  addTagParam
+} from './data.d'
 
 export async function queryUserInfo() {
   return request('/api/currentUser', {
@@ -7,16 +10,25 @@ export async function queryUserInfo() {
   })
 }
 
-export async function queryNavList(params: any) {
-  return request('/api/navItems', {
+// 注册api
+export async function queryRegister(params: registerParam) {
+  return request('/api/register', {
     method: 'POST',
     data: params
   })
 }
 
-export async function queryRegister(params: registerParam) {
-  return request('/api/register', {
+// 添加标签api
+export async function queryAddTag(params: addTagParam) {
+  return request('/api/addTag', {
     method: 'POST',
     data: params
+  })
+}
+
+// 添加标签api
+export async function queryGetTagList() {
+  return request('/api/queryTagList', {
+    method: 'GET',
   })
 }

@@ -26,7 +26,7 @@ const defaultFooterDom = (
   <Footer className={styles.footer}>
     <Row>
       <Col span={12} offset={6}>
-        ©2019 ｜ 全栈：singlebuck
+        ©2020 ｜ 全栈：singlebuck
       </Col>
     </Row>
   </Footer>

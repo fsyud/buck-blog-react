@@ -4,7 +4,6 @@ import { connect } from 'dva'
 import { TimeLine } from '@/models/common.d'
 import { ConnectProps } from '@/models/connect';
 import { TimeLineState } from '@/models/timelinemodel'
-
 import styles from './index.less'
 
 export interface buckCourseProps extends ConnectProps {
@@ -20,10 +19,9 @@ class buckCourse extends React.Component<buckCourseProps> {
   }
 
   render() {
-    const { currentLine } = this.props
-
-    const { data } = currentLine
-
+    const {
+      currentLine : { data }
+    } = this.props
     if(!data) return (<div className={styles.Spin}><Spin /></div>)
 
     const curLineList = data.list
@@ -59,6 +57,12 @@ class buckCourse extends React.Component<buckCourseProps> {
   }
 }
 
-export default connect(({ timelineModelSpace }: { timelineModelSpace: TimeLineState }) => ({
+export default connect(
+  ({
+    timelineModelSpace
+  }: {
+    timelineModelSpace: TimeLineState
+  }) => ({
   currentLine: timelineModelSpace.currentLine,
-}))(buckCourse);
+})
+)(buckCourse);

@@ -20,7 +20,7 @@ export function _onCreate() {
     app.use(plugin);
   });
   
-  app.model({ namespace: 'layoutmodel', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/layoutmodel.ts').default) });
+  app.model({ namespace: 'articlemodel', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/articlemodel.ts').default) });
 app.model({ namespace: 'projectmodel', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/projectmodel.ts').default) });
 app.model({ namespace: 'timelinemodel', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/timelinemodel.ts').default) });
   return app;

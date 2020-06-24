@@ -37,7 +37,7 @@ const RegisterModal: FC<OperationModalProps> = (props) => {
   };
 
   const modalFooter ={
-    okText: '保存',
+    okText: action ===  'register' ? '注册' : '登录',
     cancelText: '取消',
     onOk: handleSubmit,
     onCancel

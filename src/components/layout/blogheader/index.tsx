@@ -7,19 +7,17 @@ import {
   Badge,
   Avatar,
   Dropdown,
-  message,
   Button,
   notification
 } from 'antd';
-import { connect } from 'dva';
 import { UserAddOutlined, UserOutlined } from '@ant-design/icons';
 import request from 'umi-request';
+import { GithubOutlined, MailOutlined } from '@ant-design/icons'
 
 import BlogMenu from './../blogmenu';
 import { NavList } from '@/constant/_common'
 import { CurrentUser } from '@/models/common.d';
 import { ConnectProps } from '@/models/connect';
-import { StateType } from '@/models/layoutmodel';
 import { registerParam } from '@/service/data.d'
 import RegisterModal from '@/components/registerModal'
 import styles from './index.less';
@@ -31,7 +29,7 @@ interface HeaderRightProps extends ConnectProps {
   currPath?: string;
 }
 
-interface  HeaderRightState{
+interface HeaderRightState{
   visible: boolean;
   action: string;
   loginState: boolean;
@@ -71,12 +69,16 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
     const { visible, action, loginState, curUser } = this.state;
 
 
+    // 登出
     const onClick = ({ key }) => {
       const _this = this;
       if (key === '1') {
         request('/api/logout', { method: 'post' })
           .then(function(response) {
-            notification.info({ message: response.message });
+            notification.info({
+              message: response.message,
+              duration: 1
+            });
             _this.setState({ loginState: false });
             window.sessionStorage.userInfo = '';
           })
@@ -113,7 +115,11 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
       let ele;
       if (props.sta) {
         ele = (
-          <div>
+          <div className={styles.userInfolist}>
+            <div className={styles.incon_list}>
+              <GithubOutlined style={{fontSize: '23px', marginTop: '22px'}} />
+              <MailOutlined style={{fontSize: '23px', marginTop: '22px'}} />
+            </div>
             <Badge dot>
               <Avatar src={sculpture} shape="square" />
             </Badge>
@@ -150,12 +156,18 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
           data: { ...val },
         })
           .then(res => {
-            notification.info({ message: res.message });
+            notification.info({
+              message: res.message,
+              duration: 1
+            });
             if (res.code === 1) return;
             _this.setState({ visible: false });
           })
           .catch(function(error) {
-            notification.info({ message: error });
+            notification.info({
+              message: error,
+              duration: 1
+            });
           });
       } else {
         request('/api/login', {
@@ -163,7 +175,10 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
           data: { ...val },
         })
           .then(res => {
-            notification.info({ message: res.message });
+            notification.info({
+              message: res.message,
+              duration: 1
+            });
             if (res.code === 1) return;
             _this.setState({ visible: false });
             _this.setState({ loginState: true });
@@ -176,7 +191,10 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
             window.sessionStorage.userInfo = JSON.stringify(userInfo);
           })
           .catch(function(error) {
-            notification.info({ message: error });
+            notification.info({
+              message: error,
+              duration: 1
+            });
           });
       }
     }
@@ -214,6 +232,4 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
 }
 
 // export default BlogHeader;
-export default connect(({ accountCenter }: { accountCenter: StateType }) => ({
-  currentUser: accountCenter.currentUser,
-}))(BlogHeader);
+export default BlogHeader;

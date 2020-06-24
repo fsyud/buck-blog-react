@@ -1,6 +1,5 @@
 import React from 'react'
 import { Menu, Spin } from 'antd'
-import { connect } from 'dva'
 import Link from 'umi/link';
 import { CurrNav } from '@/models/common.d'
 import { RouteChildrenProps } from 'react-router';
@@ -40,6 +39,4 @@ const BlogMenu: React.FC<Partial<StateType>> = props => {
   )
 }
 
-export default connect(({ accountCenter }: { accountCenter: StateType }) => ({
-  currNav: accountCenter.NavList,
-}))(BlogMenu);
+export default BlogMenu;

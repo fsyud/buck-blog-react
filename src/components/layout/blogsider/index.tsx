@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Layout, Tag, Spin, Avatar } from 'antd'
-import { connect } from 'dva'
-import { StateType } from '@/models/layoutmodel'
+import { tagList } from '@/models/common.d'
 import { RandomColor } from '@/constant/_common'
 import styles from './index.less'
+import getApi from '@/utils/tool/api'
+import request from 'umi-request'
 import { UserOutlined } from '@ant-design/icons'
 import sculpture from '@/assets/avatar/cat.jpeg'
 
@@ -14,14 +15,27 @@ const siderSpin = (
   <Sider className={styles.sider}><Spin /></Sider>
 )
 
-const BlogSider: React.FC<Partial<StateType>> = props => {
+interface tagBasicProps {
+  conf?: string;
+}
 
-  const { currentUser } = props
-  const { tags } = currentUser
+export const BlogSider: FC<tagBasicProps> = props => {
+  const [ tagList, setTagList ] = useState<tagList[]>([])
 
-  if(!tags) return siderSpin
+  useEffect((): void => {
+    request(getApi('queryTagList'), { method: 'get' })
+      .then(function(response) {
+        if(Object.getOwnPropertyNames(response).length !== 0) {
+          const {data: {list} } = response
+          setTagList(list)
+        }
+      })
+      .catch(function(error) {
+        if(error) setTagList([])
+      });
+  }, []);
 
-  tags.map(s => {
+  tagList.map(s => {
     let curColor = RandomColor[Math.floor(
       Math.random() * (RandomColor.length + 1)
     )]
@@ -40,12 +54,12 @@ const BlogSider: React.FC<Partial<StateType>> = props => {
       <h4>标签云</h4>
       <div>
         {
-          tags.map(ele => (
+          tagList.map(ele => (
             <Tag
-              key={ele.key}
+              key={ele._id}
               color={ele.color}
             >
-              {ele.label}
+              {ele.name}
             </Tag>
           ))
         }
@@ -54,6 +68,4 @@ const BlogSider: React.FC<Partial<StateType>> = props => {
   )
 }
 
-export default connect(({ accountCenter }: { accountCenter: StateType }) => ({
-  currentUser: accountCenter.currentUser,
-}))(BlogSider);
+export default BlogSider;
