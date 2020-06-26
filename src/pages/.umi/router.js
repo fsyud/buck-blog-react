@@ -19,6 +19,13 @@ const routes = [
     component: require('../../layouts/index.tsx').default,
     routes: [
       {
+        path: '/articleDetail',
+        exact: true,
+        component: require('../articleDetail/index.tsx').default,
+        _title: 'singleBuck',
+        _title_default: 'singleBuck',
+      },
+      {
         path: '/buckArticle',
         exact: true,
         component: require('../buckArticle/index.tsx').default,
