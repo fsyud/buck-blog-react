@@ -14,7 +14,7 @@ import bg from '@/assets/icon/buck.png';
 const { Sider } = Layout;
 
 interface basicArticleProps extends ConnectProps {
-  articLeist: Partial<articleList>;
+  articleList: Partial<articleList>;
 }
 
 interface basicArticleStatae {
@@ -46,7 +46,7 @@ class Article extends React.Component<basicArticleProps, basicArticleStatae> {
 
   render() {
     const {
-      articLeist: { data },
+      articleList: { data },
     } = this.props;
 
     if (!data) return siderSpin;
@@ -136,5 +136,5 @@ class Article extends React.Component<basicArticleProps, basicArticleStatae> {
 }
 
 export default connect(({ articleSpace }: { articleSpace: articleState }) => ({
-  articLeist: articleSpace.articLeist,
+  articleList: articleSpace.articleList,
 }))(Article)

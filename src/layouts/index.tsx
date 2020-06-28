@@ -40,7 +40,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   let isShowSlider = false;
   const { pathname } = props.location
 
-  isShowSlider = !pathname.includes('buckCenter')
+  isShowSlider = !pathname.includes('buckCenter') || !pathname.includes('articleDetail')
 
   return (
     <Layout className={styles.layouts}>

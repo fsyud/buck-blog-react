@@ -4,7 +4,7 @@ import { queryArticleList } from '@/service/articleservice';
 import { articleList } from './common.d';
 
 export interface articleState {
-  articLeist?: Partial<articleList>;
+  articleList?: Partial<articleList>;
 }
 
 export interface ModelType {
@@ -21,7 +21,7 @@ export interface ModelType {
 const Model: ModelType = {
   namespace: 'articleSpace',
   state: {
-    articLeist: {},
+    articleList: {},
   },
   effects: {
     *getArticleList({ payload }, { call, put }) {
@@ -36,7 +36,7 @@ const Model: ModelType = {
     getArticle(state, action) {
       return {
         ...(state as articleState),
-        articLeist: action.payload,
+        articleList: action.payload,
       };
     },
   },

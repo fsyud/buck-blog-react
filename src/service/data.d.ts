@@ -18,3 +18,8 @@ export interface addArticleParam {
   author: string;
   content: string
 }
+
+export interface getArticleDetailParam {
+  id: string;
+  type: number;
+}

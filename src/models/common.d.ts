@@ -91,7 +91,7 @@ export interface articleMeta {
   comment: number;
 }
 
-export interface articleDetailData {
+export interface artDetailList {
   meta: {
     views: number;
     likes: number;
@@ -116,6 +116,15 @@ export interface articleDetailData {
   updara_time: Data;
   id: number;
   __v: number;
+}
+
+export interface articleDetailist {
+  code: number;
+  message: string;
+  data: {
+    count: number;
+    list?: artDetailList[];
+  }
 }
 
 export interface artDataList {
