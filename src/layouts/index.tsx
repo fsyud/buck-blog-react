@@ -25,7 +25,7 @@ const noMatch = (
 const defaultFooterDom = (
   <Footer className={styles.footer}>
     <Row>
-      <Col span={12} offset={6}>
+      <Col span={12} offset={6} className={styles.footer_info}>
         ©2020 ｜ 全栈：singlebuck
       </Col>
     </Row>

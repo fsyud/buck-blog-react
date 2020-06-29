@@ -1,0 +1,37 @@
+.comment {
+  position: relative;
+  padding: 30px 50px 0 80px;
+  border-top: 1px solid #eee;
+
+  .author_logo {
+    position: absolute;
+    left: 10px;
+  }
+
+  .textarea {
+    padding: 10px 15px;
+    width: 100%;
+    height: 50px;
+    font-size: 13px;
+    border-radius: 4px;
+    resize: none;
+    display: inline-block;
+    vertical-align: top;
+    outline-style: none;
+  }
+
+  .write_function_block {
+    height: 50px;
+    margin-top: 20px;
+
+    :global {
+      .ant-btn-primary {
+        float: right;
+        margin-right: 30px;
+      }
+      .ant-btn-ghost {
+        float: right;
+      }
+    }
+  }
+}

@@ -2,10 +2,11 @@ import React from 'react';
 import {
   Layout, Spin, notification, Avatar, Button
 } from 'antd';
-import { TagOutlined, GithubOutlined } from '@ant-design/icons';
+import { TagOutlined, GithubOutlined, LikeOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
 import { articleDetailState } from '@/models/articledetailmodels';
 import { ConnectProps } from '@/models/connect';
+import Comment from '@/components/comments/comment'
 import { isMobileOrPc, timestampToTime } from '@/utils/tool/tool';
 import { articleDetailist } from '@/models/common.d';
 import author from '@/assets/avatar/cat.jpeg';
@@ -30,12 +31,14 @@ interface basicArticleDetailProps extends ConnectProps {
 interface basicArticleDetailState {
   dataState: boolean;
   isPc: boolean;
+  leaveWord: string;
 }
 
 class ArticleDetail extends React.Component<basicArticleDetailProps, basicArticleDetailState> {
   state: basicArticleDetailState = {
     dataState: false,
     isPc: isMobileOrPc(),
+    leaveWord: ''
   };
 
   componentDidMount() {
@@ -70,6 +73,14 @@ class ArticleDetail extends React.Component<basicArticleDetailProps, basicArticl
 
   likeArticle() {
     console.log('likeArticle')
+  }
+
+  handleChange() {
+
+  }
+
+  handleAddComment() {
+
   }
 
   render() {
@@ -149,15 +160,21 @@ class ArticleDetail extends React.Component<basicArticleDetailProps, basicArticl
           />
         </div>
         <div className={styles.heart}>
-            <Button
-              type="primary"
-              size="large"
-              onClick={this.likeArticle}
-            >
-              点赞
-            </Button>
-          </div>
+          <Button
+            type="primary"
+            size="large"
+            onClick={this.likeArticle}
+          >
+            <LikeOutlined />
+            赞
+          </Button>
+        </div>
 
+        <Comment
+          content={this.state.leaveWord}
+          handleChange={this.handleChange}
+          handleAddComment={this.handleAddComment}
+        />
       </div>
     );
 

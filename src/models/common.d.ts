@@ -96,6 +96,29 @@ export interface articeTags {
   name: string;
 }
 
+// 评论
+export interface commentsList {
+  _id: string;
+  id: number;
+  update_time: Data;
+  create_time: Data;
+  other_comments: commentsList[];
+  user_id: string;
+  content: string;
+  article_id: string;
+  is_handle: number;
+  state: number;
+  likes: number;
+  is_top: boolean;
+  user: {
+    name: string;
+    type: number;
+    avatar: string;
+    user_id: string;
+  }
+}
+
+// 文章详情列表
 export interface articleDetailist {
   code: number;
   message: string;
@@ -113,7 +136,7 @@ export interface articleDetailist {
     state: number;
     origin: number;
     tags: articeTags[];
-    comments: Array<[]>;
+    comments: commentsList[];
     category: Array<[]>;
     _id: string;
     title: string;
@@ -127,6 +150,7 @@ export interface articleDetailist {
   };
 }
 
+// 文章列表
 export interface artDataList {
   meta: {
     views: number;

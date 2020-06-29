@@ -4,6 +4,9 @@ import { Link } from 'umi'
 import { ConnectProps } from '@/models/connect';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { connect } from 'dva';
+import {
+  EyeOutlined, MessageOutlined ,LikeOutlined, FieldTimeOutlined
+} from '@ant-design/icons'
 import { articleState } from '@/models/articlemodel';
 import { articleList } from '@/models/common.d';
 import { timestampToTime } from '@/utils/tool/tool'
@@ -75,10 +78,10 @@ class Article extends React.Component<basicArticleProps, basicArticleStatae> {
               />
             </LazyLoad>
           </a>
-          <div className="content" >
+          <div className={styles.content} >
             <h2>
               <Link
-                className="title"
+                className={styles.title}
                 target="_blank"
                 to={`/articleDetail?article_id=${item._id}`}
               >
@@ -91,21 +94,25 @@ class Article extends React.Component<basicArticleProps, basicArticleStatae> {
                 rel="noopener noreferrer"
                 to={`/articleDetail?article_id=${item._id}`}
               >
+                <EyeOutlined />
                 {item.meta.views}
               </Link>{' '}
               <Link
                 target="_blank"
                 to={`/articleDetail?article_id=${item._id}`}
               >
+                <MessageOutlined />
                 {item.meta.comments}
               </Link>{' '}
               <Link
                 target="_blank"
                 to={`/articleDetail?article_id=${item._id}`}
               >
+                <LikeOutlined />
                 {item.meta.likes}
               </Link>
-              <span className="time">
+              <span className={styles.time}>
+                <FieldTimeOutlined />
                 {item.create_time
                   ? timestampToTime(item.create_time, true)
                   : ''}
