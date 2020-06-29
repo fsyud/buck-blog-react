@@ -40,18 +40,22 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   let isShowSlider = false;
   const { pathname } = props.location
 
-  isShowSlider = !pathname.includes('buckCenter') || !pathname.includes('articleDetail')
+  const exceptRouter = [
+    'buckCenter', 'articleDetail'
+  ]
+
+  isShowSlider = exceptRouter.some(s => s.includes(pathname.slice(1)))
 
   return (
     <Layout className={styles.layouts}>
       <BlogHeader currPath={pathname} />
       <Layout className={styles.layouts_second}>
-        <Col span={ isShowSlider ? 17 : 24 }>
+        <Col span={ isShowSlider ? 24 : 17 }>
           <Content className={styles.content}>
             {props.children}
           </Content>
         </Col>
-        { isShowSlider ? (<Col span={7}><BlogSider /></Col>) : ('') }
+        { isShowSlider ? ('') : (<Col span={7}><BlogSider /></Col>) }
       </Layout>
       {defaultFooterDom}
     </Layout>

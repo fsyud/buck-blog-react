@@ -1,4 +1,4 @@
-import { Data } from "unist";
+import { Data } from 'unist';
 
 export interface TagVerb {
   key?: string;
@@ -8,7 +8,7 @@ export interface TagVerb {
 
 export interface NavType {
   article?: string;
-  router?: string,
+  router?: string;
   key?: string;
 }
 
@@ -41,11 +41,11 @@ export interface lineList {
 // 时间轴
 export interface TimeLine {
   code?: number;
-  message?: string,
+  message?: string;
   data: {
     count?: number;
     list: lineList[];
-  }
+  };
 }
 
 export interface ProjectList {
@@ -61,11 +61,11 @@ export interface ProjectList {
 // 项目
 export interface Project {
   code?: number;
-  message?: string,
+  message?: string;
   data: {
     count?: number;
     list: ProjectList[];
-  }
+  };
 }
 
 // 标签
@@ -78,11 +78,11 @@ export interface tagList {
 
 export interface tagDefine {
   code?: number;
-  message?: string,
+  message?: string;
   data: {
     count?: number;
     list: tagList[];
-  }
+  };
 }
 
 export interface articleMeta {
@@ -91,40 +91,40 @@ export interface articleMeta {
   comment: number;
 }
 
-export interface artDetailList {
-  meta: {
-    views: number;
-    likes: number;
-    comments: number;
-  };
-  keyword: Array<[]>;
-  desc: string;
-  numbers: string;
-  img_url: string;
-  type: number;
-  state: number;
-  origin: number;
-  tags: Array<[]>;
-  comments: Array<[]>;
-  category: Array<[]>;
-  _id: string;
-  title: string;
-  author: string;
-  content: string;
-  like_users: Array<[]>;
-  create_time: Data;
-  updara_time: Data;
+export interface articeTags {
   id: number;
-  __v: number;
+  name: string;
 }
 
 export interface articleDetailist {
   code: number;
   message: string;
   data: {
-    count: number;
-    list?: artDetailList[];
-  }
+    meta: {
+      views: number;
+      likes: number;
+      comments: number;
+    };
+    keyword: Array<[]>;
+    desc: string;
+    numbers: string;
+    img_url: string;
+    type: number;
+    state: number;
+    origin: number;
+    tags: articeTags[];
+    comments: Array<[]>;
+    category: Array<[]>;
+    _id: string;
+    title: string;
+    author: string;
+    content: string;
+    like_users: Array<[]>;
+    create_time: Data;
+    updara_time: Data;
+    id: number;
+    __v: number;
+  };
 }
 
 export interface artDataList {
@@ -148,5 +148,5 @@ export interface articleList {
   data: {
     count: number;
     list?: artDataList[];
-  }
+  };
 }

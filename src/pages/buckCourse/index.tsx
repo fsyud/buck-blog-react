@@ -3,6 +3,7 @@ import { Timeline, Spin} from 'antd'
 import { connect } from 'dva'
 import { TimeLine } from '@/models/common.d'
 import { ConnectProps } from '@/models/connect';
+import { timestampToTime } from '@/utils/tool/tool'
 import { TimeLineState } from '@/models/timelinemodel'
 import styles from './index.less'
 
@@ -40,11 +41,11 @@ class buckCourse extends React.Component<buckCourseProps> {
                   <p>{item.content}</p>
                   <p>
                     <span>
-                      { item.start_time }--
+                      {timestampToTime(item.start_time, false)}--
                     </span>
                     <span>
                       {' '}
-                      { item.end_time }
+                      {timestampToTime(item.end_time, false)}
                     </span>
                   </p>
                 </div>

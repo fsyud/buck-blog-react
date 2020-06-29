@@ -1,7 +1,127 @@
 @base-color: #fff;
+@base-ml: 20px;
 
-.articleMain {
+.article {
+  .article_left {
+    float: left;
+    border: 1px red solid;
 
+    .l_header {
+      .l_title {
+        margin: 20px 0 0;
+        text-align: center;
+        font-size: 34px;
+        font-weight: bold;
+        color: #404040;
+      }
+
+      .l_author {
+        position: relative;
+        margin: 30px 0 40px;
+        padding-left: 50px;
+
+        .l_avatar {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 48px;
+          height: 48px;
+          vertical-align: middle;
+          display: inline-block;
+        }
+
+        .l_author_info {
+          float: left;
+          vertical-align: middle;
+          margin-left: 8px;
+
+          .l_name {
+            margin-right: 3px;
+            font-size: 20px;
+            vertical-align: middle;
+            font-weight: bold;
+            .l_name_info {
+              color: #00965e;
+              margin-right: 20px;
+            }
+
+            a {
+              color: #212529 !important;
+            }
+          }
+
+          .l_meta {
+            float: left;
+            color: #6c757d;
+
+            .l_pyblish_time {
+              float: left;
+            }
+
+            .l_number {
+              float: left;
+              margin-left: @base-ml;
+            }
+
+            .l_views {
+              float: left;
+              margin-left: @base-ml;
+            }
+
+            .l_comments {
+              float: left;
+              margin-left: @base-ml;
+            }
+
+            .l_likes {
+              float: left;
+              margin-left: @base-ml;
+            }
+          }
+        }
+
+        .l_tags {
+          float: right;
+          margin-top: 23px;
+
+          span {
+            background-color: rgba(0,150, 94, .1);
+            padding: 4px;
+            color: #00965e;
+            border-radius: 3px;
+            margin-right: 10px;
+            float: left;
+          }
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+          display: table;
+          content: '';
+        }
+        .clearfix:after {
+          clear: both;
+        }
+      }
+    }
+
+    .l_content {
+      min-height: 300px;
+      margin-top: 20px;
+    }
+
+    .heart {
+      height: 60px;
+      text-align: center;
+      margin: 50px;
+    }
+  }
+
+  .article_right {
+    float: right;
+    width: 23%;
+    border: 1px black solid;
+  }
 }
 
 .sider {
