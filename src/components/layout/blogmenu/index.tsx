@@ -16,18 +16,19 @@ const BlogMenu: React.FC<Partial<StateType>> = props => {
 
   const [ defaultKey, setDefaultKey ] = useState<string>('')
 
-  const articleHas = menuSelect.includes('articleDetail')
+  const articleHas = menuSelect.includes('articleDetail') || menuSelect === '/'
 
   // 判断是否包含文章详情路由
   if(!articleHas) {
     const defaultSelect = list
-    && list.filter(s => s.router.includes(menuSelect))[0].router
+      && list.filter(s => s.router.includes(menuSelect))[0].router
 
     if(!defaultSelect) return (<div className={styles.Spin}><Spin /></div>)
 
     useEffect(() => {
       setDefaultKey(defaultSelect)
     }, [props.menuSelect])
+
   } else {
     useEffect(() => {
       setDefaultKey('')

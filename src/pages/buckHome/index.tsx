@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import { Result,  Spin} from 'antd';
+import { Result,  Button } from 'antd';
 
 class Users extends Component<{}> {
-
-
   render() {
     return (
       <div>
-        <Spin />
+        <Result
+          title="该页面正在开发。。。"
+        />,
       </div>
     )
   }

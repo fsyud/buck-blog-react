@@ -54,6 +54,13 @@ const routes = [
         _title_default: 'singleBuck',
       },
       {
+        path: '/buckHome',
+        exact: true,
+        component: require('../buckHome/index.tsx').default,
+        _title: 'singleBuck',
+        _title_default: 'singleBuck',
+      },
+      {
         path: '/buckItem',
         exact: true,
         component: require('../buckItem/index.tsx').default,

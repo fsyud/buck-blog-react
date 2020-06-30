@@ -1,14 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   Layout, Spin, notification, Avatar, Button
 } from 'antd';
 import { TagOutlined, GithubOutlined, LikeOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
+import clone from 'lodash/clone'
 import { articleDetailState } from '@/models/articledetailmodels';
+import { commentState } from '@/models/commentmodel';
 import { ConnectProps } from '@/models/connect';
+import { sessionStorageGet } from '@/utils/tool/tool'
 import Comment from '@/components/comments/comment'
+import CommentList from '@/components/comments/list'
 import { isMobileOrPc, timestampToTime } from '@/utils/tool/tool';
-import { articleDetailist } from '@/models/common.d';
+import { articleDetailist, stairComment } from '@/models/common.d';
 import author from '@/assets/avatar/cat.jpeg';
 
 import styles from './index.less';
@@ -25,6 +29,7 @@ const siderSpin = (
 
 interface basicArticleDetailProps extends ConnectProps {
   articleDetailList: Partial<articleDetailist>;
+  stairCommentList: Partial<stairComment>
   location?: any;
 }
 
@@ -32,13 +37,15 @@ interface basicArticleDetailState {
   dataState: boolean;
   isPc: boolean;
   leaveWord: string;
+  StairComState: Array<[]>;
 }
 
-class ArticleDetail extends React.Component<basicArticleDetailProps, basicArticleDetailState> {
+class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetailState> {
   state: basicArticleDetailState = {
     dataState: false,
     isPc: isMobileOrPc(),
-    leaveWord: ''
+    leaveWord: '',
+    StairComState: []
   };
 
   componentDidMount() {
@@ -56,7 +63,7 @@ class ArticleDetail extends React.Component<basicArticleDetailProps, basicArticl
   }
 
   componentDidUpdate() {
-    const { articleDetailList } = this.props;
+    const { articleDetailList, stairCommentList } = this.props;
 
     const noData =
       Object.keys(articleDetailList).length > 0 &&
@@ -65,7 +72,14 @@ class ArticleDetail extends React.Component<basicArticleDetailProps, basicArticl
     if (noData) {
       notification.info({
         message: articleDetailList.message,
-        duration: 2,
+        duration: 1,
+      });
+    }
+
+    if(Object.keys(stairCommentList).length > 0) {
+      notification.info({
+        message: stairCommentList.message,
+        duration: 1,
       });
     }
   }
@@ -75,23 +89,42 @@ class ArticleDetail extends React.Component<basicArticleDetailProps, basicArticl
     console.log('likeArticle')
   }
 
-  handleChange() {
-
-  }
-
-  handleAddComment() {
-
-  }
-
   render() {
     const {
       articleDetailList: { data },
+      dispatch,
+      location: { query },
     } = this.props;
     const { isPc } = this.state;
 
     const curData = data && Object.keys(data).length === 0;
 
     if (!data || curData) return siderSpin;
+
+
+    // 一级留言框内容改变
+    const handleChange = ():void => {
+
+    }
+
+    // 添加一级留言内容
+    const handleAddComment = (content: string): void => {
+      const UserSession = sessionStorageGet('userInfo')
+      const user_id = UserSession ? UserSession['_id'] : ''
+      const { article_id } = query;
+      const curPam = {
+        user_id: user_id,
+        article_id,
+        content,
+      }
+      const stairPam = UserSession
+        ? Object.assign(clone(curPam), {hasUserInfo: true})
+        : curPam
+      dispatch({
+        type: 'commentSpace/addStairComment',
+        payload: stairPam
+      })
+    }
 
     const [lWidth] = [isPc ? '100%' : '75%'];
 
@@ -172,8 +205,13 @@ class ArticleDetail extends React.Component<basicArticleDetailProps, basicArticl
 
         <Comment
           content={this.state.leaveWord}
-          handleChange={this.handleChange}
-          handleAddComment={this.handleAddComment}
+          handleChange={handleChange}
+          handleAddComment={handleAddComment}
+        />
+
+        <CommentList
+          list={data.comments}
+          commentNumber={data.meta.comments}
         />
       </div>
     );
@@ -189,6 +227,15 @@ class ArticleDetail extends React.Component<basicArticleDetailProps, basicArticl
   }
 }
 
-export default connect(({ articleDetailSpace }: { articleDetailSpace: articleDetailState }) => ({
+export default connect(
+  ({
+    articleDetailSpace,
+    commentSpace,
+  }: {
+    articleDetailSpace: articleDetailState,
+    commentSpace: commentState
+  }) => ({
   articleDetailList: articleDetailSpace.articleDetailList,
-}))(ArticleDetail);
+  stairCommentList: commentSpace.stairCommentList
+})
+)(ArticleDetail);

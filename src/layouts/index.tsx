@@ -33,12 +33,17 @@ const defaultFooterDom = (
 )
 
 export interface BasicLayoutProps {
-  location?: any
+  location?: any;
+  history?: any;
 }
 
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
   let isShowSlider = false;
+  const { history } = props
   const { pathname } = props.location
+
+  // 路由重定向
+  if(pathname === '/') history.push('/buckHome')
 
   const exceptRouter = [
     'buckCenter', 'articleDetail'

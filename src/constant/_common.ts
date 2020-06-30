@@ -9,7 +9,7 @@ export const NavList = {
   list: [
     {
       article: '首页',
-      router: '',
+      router: '/buckHome',
       key: '1'
     },
     {

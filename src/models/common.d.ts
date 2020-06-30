@@ -174,3 +174,10 @@ export interface articleList {
     list?: artDataList[];
   };
 }
+
+// 文章一级评论添加
+export interface stairComment {
+  code: number;
+  message: string;
+  data: commentsList[];
+}

@@ -19,6 +19,7 @@ import { NavList } from '@/constant/_common'
 import { CurrentUser } from '@/models/common.d';
 import { ConnectProps } from '@/models/connect';
 import { registerParam } from '@/service/data.d'
+import { sessionStorageSet, sessionStorageRemove } from '@/utils/tool/tool'
 import RegisterModal from '@/components/registerModal'
 import styles from './index.less';
 import logo from '@/assets/icon/buck.png';
@@ -80,7 +81,7 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
               duration: 1
             });
             _this.setState({ loginState: false });
-            window.sessionStorage.userInfo = '';
+            sessionStorageRemove('userInfo')
           })
           .catch(function(error) {
             notification.info({ message: error });
@@ -188,7 +189,7 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
               name: res.data.name,
               avatar: res.data.avatar,
             };
-            window.sessionStorage.userInfo = JSON.stringify(userInfo);
+            sessionStorageSet('userInfo', userInfo)
           })
           .catch(function(error) {
             notification.info({

@@ -1,0 +1,12 @@
+import request from '@/utils/request'
+
+import {
+  addCommentParam
+} from './data.d'
+
+export async function addStairComment(params: addCommentParam) {
+  return request('/api/addComment', {
+    method: 'POST',
+    data: params
+  })
+}

@@ -7,7 +7,7 @@ const { TextArea } = Input;
 interface basicCommentProps {
   content: string;
   handleChange: () => void;
-  handleAddComment: () => void;
+  handleAddComment: (content: string) => void;
 }
 
 interface UserInfo {
@@ -21,13 +21,22 @@ const Comment: FC<basicCommentProps> = (props) => {
   const { content, handleChange, handleAddComment} = props;
 
   const [ curUserInfo, setCurUserInfo] = useState<Partial<UserInfo> | undefined>(undefined)
+  const [ commentContent, setCommentContent ] = useState<string>('')
 
   useEffect(() => {
     if (window.sessionStorage.userInfo) {
       const userInfo = JSON.parse(window.sessionStorage.userInfo);
       setCurUserInfo(userInfo)
     }
-  })
+  }, [])
+
+  const submitComment = (): void => {
+    if(handleAddComment) handleAddComment(commentContent)
+  }
+
+  const AreaChange = (e): void => {
+    setCommentContent(e.target.value)
+  }
 
   return (
     <div className={styles.comment}>
@@ -37,12 +46,17 @@ const Comment: FC<basicCommentProps> = (props) => {
           size={50}
           src={curUserInfo ? curUserInfo.avatar : ''}
         />
-        <div>{curUserInfo ? curUserInfo.name : ''}</div>
+        {
+          curUserInfo && curUserInfo.name ? (
+            <div className={styles.cur_author}>
+              {`@${curUserInfo.name}`}
+            </div>
+          ) : (<div></div>)
+        }
         <TextArea
           className={styles.textarea}
-          name="content"
-          value={content}
-          onChange={handleChange}
+          value={commentContent}
+          onChange={AreaChange}
           placeholder="撰写评论 ..."
           rows={4}
         />
@@ -55,11 +69,11 @@ const Comment: FC<basicCommentProps> = (props) => {
             </Button>
             <Button
               type='primary'
+              onClick={submitComment}
             >
               发送
             </Button>
         </div>
-
       </div>
     </div>
   );
