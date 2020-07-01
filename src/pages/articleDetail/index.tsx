@@ -12,7 +12,7 @@ import { sessionStorageGet } from '@/utils/tool/tool'
 import Comment from '@/components/comments/comment'
 import CommentList from '@/components/comments/list'
 import { isMobileOrPc, timestampToTime } from '@/utils/tool/tool';
-import { articleDetailist, stairComment } from '@/models/common.d';
+import { articleDetailist, stairComment, thirdCommentInfo} from '@/models/common.d';
 import author from '@/assets/avatar/cat.jpeg';
 
 import styles from './index.less';
@@ -101,6 +101,8 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
 
     if (!data || curData) return siderSpin;
 
+    const UserSession = sessionStorageGet('userInfo');
+    const user_id = UserSession ? UserSession['_id'] : '';
 
     // 一级留言框内容改变
     const handleChange = ():void => {
@@ -109,8 +111,6 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
 
     // 添加一级留言内容
     const handleAddComment = (content: string): void => {
-      const UserSession = sessionStorageGet('userInfo')
-      const user_id = UserSession ? UserSession['_id'] : ''
       const { article_id } = query;
       const curPam = {
         user_id: user_id,
@@ -123,6 +123,16 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
       dispatch({
         type: 'commentSpace/addStairComment',
         payload: stairPam
+      })
+    }
+
+    // 添加三级留言内容
+    const SendThirdComment = (val: thirdCommentInfo): void => {
+      const toUser = JSON.stringify(val.to_user)
+
+      dispatch({
+        type: 'commentSpace/addThirdComment',
+        payload: Object.assign(val, {to_user: toUser})
       })
     }
 
@@ -212,6 +222,11 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
         <CommentList
           list={data.comments}
           commentNumber={data.meta.comments}
+          commentInfo={{
+            article: query.article_id,
+            user: user_id
+          }}
+          thirdCommentSend={SendThirdComment}
         />
       </div>
     );

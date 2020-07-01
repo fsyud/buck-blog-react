@@ -96,13 +96,33 @@ export interface articeTags {
   name: string;
 }
 
+export interface otherCommentList {
+  user: {
+    name: string;
+    type: number;
+    avatar: string;
+    user_id: string;
+  },
+  to_user: {
+    name: string;
+    type: number;
+    avatar: string;
+    user_id: string;
+  }
+  likes: number;
+  state: number;
+  create_time: Data;
+  _id: string;
+  content: string;
+}
+
 // 评论
 export interface commentsList {
   _id: string;
   id: number;
   update_time: Data;
   create_time: Data;
-  other_comments: commentsList[];
+  other_comments: otherCommentList[];
   user_id: string;
   content: string;
   article_id: string;
@@ -180,4 +200,28 @@ export interface stairComment {
   code: number;
   message: string;
   data: commentsList[];
+}
+
+// 三级评论传递数据
+export interface thirdCommentInfo {
+  user_id: string;
+  article_id: string;
+  comment_id: string;
+  content: string;
+  to_user: {
+    name: string;
+    type: number;
+    avatar: string;
+    user_id: string;
+  };
+}
+
+// 三级评论成功返回参数
+export interface thirdCommentCallbackMessage {
+  code: number;
+  message: string;
+  data: {
+    count: number;
+    list?: artDataList[];
+  };
 }

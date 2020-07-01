@@ -32,3 +32,12 @@ export interface addCommentParam {
   article_id: string;
   content: string;
 }
+
+// 三级评论传递参数
+export interface thirdCommentParam {
+  user_id: string;
+  article_id: string;
+  comment_id: string;
+  content: string;
+  to_user: string;
+}

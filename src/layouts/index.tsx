@@ -27,6 +27,9 @@ const defaultFooterDom = (
     <Row>
       <Col span={12} offset={6} className={styles.footer_info}>
         ©2020 ｜ 全栈：singlebuck
+        <a href="" target="_blank">
+          皖ICP备20000463号-1
+        </a>
       </Col>
     </Row>
   </Footer>

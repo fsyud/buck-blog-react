@@ -33,7 +33,7 @@ export const NavList = {
       key: '5'
     },
     {
-      article: '个人',
+      article: '关于',
       router: '/buckCenter',
       key: '6'
     }
