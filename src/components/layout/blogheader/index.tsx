@@ -16,7 +16,6 @@ import { GithubOutlined, MailOutlined } from '@ant-design/icons'
 
 import BlogMenu from './../blogmenu';
 import { NavList } from '@/constant/_common'
-import { CurrentUser } from '@/models/common.d';
 import { ConnectProps } from '@/models/connect';
 import { registerParam } from '@/service/data.d'
 import { sessionStorageSet, sessionStorageRemove } from '@/utils/tool/tool'
@@ -24,10 +23,11 @@ import RegisterModal from '@/components/registerModal'
 import styles from './index.less';
 import logo from '@/assets/icon/buck.png';
 import sculpture from '@/assets/avatar/cat.jpeg';
+import { async } from 'q';
 
 interface HeaderRightProps extends ConnectProps {
-  currentUser?: CurrentUser;
   currPath?: string;
+  Refresh: (pam: boolean) => void;
 }
 
 interface HeaderRightState{
@@ -66,12 +66,12 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
   }
 
   render() {
-    const { currPath } = this.props;
+    const { currPath, Refresh} = this.props;
     const { visible, action, loginState, curUser } = this.state;
 
 
     // 登出
-    const onClick = ({ key }) => {
+    const onClick = ({ key }: any) => {
       const _this = this;
       if (key === '1') {
         request('/api/logout', { method: 'post' })
@@ -82,6 +82,7 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
             });
             _this.setState({ loginState: false });
             sessionStorageRemove('userInfo')
+            if(Refresh) Refresh(true)
           })
           .catch(function(error) {
             notification.info({ message: error });
@@ -101,7 +102,7 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
     )
 
     // 注册
-    const userRegisterModal = (e): void => {
+    const userRegisterModal = (e: any): void => {
       this.setState({ visible: true });
       this.setState({ action: 'register' });
     }
@@ -112,7 +113,7 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
     }
 
     // 登录按钮状态
-    const LoginElement = props => {
+    const LoginElement = (props: any) => {
       let ele;
       if (props.sta) {
         ele = (
@@ -167,7 +168,7 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
           .catch(function(error) {
             notification.info({
               message: error,
-              duration: 1
+              duration: 0.5
             });
           });
       } else {
@@ -189,12 +190,18 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
               name: res.data.name,
               avatar: res.data.avatar,
             };
-            sessionStorageSet('userInfo', userInfo)
+            sessionStorageSet('userInfo', userInfo);
+
+            if (Refresh) {
+              setTimeout(() => {
+                Refresh(true);
+              }, 1000);
+            }
           })
           .catch(function(error) {
             notification.info({
               message: error,
-              duration: 1
+              duration: 0.5
             });
           });
       }

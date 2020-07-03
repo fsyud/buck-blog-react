@@ -8,7 +8,7 @@ import CommentArea from '@/components/commentArea'
 import styles from './index.less';
 
 interface basicCommentListProps {
-  list: Partial<commentsList[]>;
+  list: commentsList[];
   commentNumber: number;
   commentInfo: {
     article: string,
@@ -16,27 +16,22 @@ interface basicCommentListProps {
   };
   thirdCommentSend: (val: thirdCommentInfo) => void;
 }
-
 const CommentList: FC<basicCommentListProps> = props => {
   const {list, commentNumber, commentInfo, thirdCommentSend} = props;
 
-  useEffect(() => {
-    // console.log(props.list);
-    // console.log(props.commentInfo);
-  }, [props.list]);
+  const sendReply = (val: string, item: any, comment_id: string): void => {
+    const { user_id, avatar, name, type} = item.user
 
-  const sendReply = (val: string, item: Partial<commentsList>): void => {
-    console.log(item)
     const thirdPam = {
       user_id: commentInfo.user,
       article_id: commentInfo.article,
-      comment_id: item._id,
+      comment_id: comment_id,
       content: val,
       to_user: {
-        user_id: item.user.user_id,
-        avatar: item.user.avatar,
-        name: item.user.name,
-        type: item.user.type
+        user_id,
+        avatar,
+        name,
+        type
       }
     }
     if(thirdCommentSend) {
@@ -86,6 +81,7 @@ const CommentList: FC<basicCommentListProps> = props => {
               <CommentArea
                 sendReply={sendReply}
                 curItem={item}
+                commentId={item._id}
               />
               {item.other_comments.map(el => (
                 <div key={el._id} className={styles.item_other}>
@@ -117,7 +113,8 @@ const CommentList: FC<basicCommentListProps> = props => {
                   </div>
                   <CommentArea
                     sendReply={sendReply}
-                    curItem={item}
+                    curItem={el}
+                    commentId={item._id}
                   />
                 </div>
               ))}

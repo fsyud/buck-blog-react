@@ -1,23 +1,33 @@
 import { Reducer } from 'redux';
 import { Effect } from 'dva';
 import { addStairComment, addThirdComment } from '@/service/commentservice';
-import { stairComment, thirdCommentCallbackMessage } from './common.d';
+import { stairComment, thirdComment } from './common.d';
 
 export interface commentState {
-  stairCommentList?: Partial<stairComment>;
-  thirdCommentList?: Partial<thirdCommentCallbackMessage>
+  stairCommentList: Partial<stairComment>;
+  thirdCommentList: Partial<thirdComment>;
+}
+
+export interface commentInfo {
+  stairCommentList: stairComment;
+  thirdCommentList: thirdComment;
+}
+
+export interface GlobalCommentState extends commentState{
+  stairState: boolean;
+  thirdState: boolean;
 }
 
 export interface ModelType {
   namespace: string;
-  state: commentState;
+  state: GlobalCommentState;
   effects: {
     addStairComment: Effect;
     addThirdComment: Effect;
   };
   reducers: {
     getStairComment: Reducer<stairComment>;
-    getThirdComment: Reducer<thirdCommentCallbackMessage>;
+    getThirdComment: Reducer<thirdComment>;
   };
 }
 
@@ -25,7 +35,9 @@ const Model: ModelType = {
   namespace: 'commentSpace',
   state: {
     stairCommentList: {},
-    thirdCommentList: {}
+    thirdCommentList: {},
+    stairState: false,
+    thirdState: false
   },
   effects: {
     *addStairComment({ payload }, { call, put }) {
@@ -38,7 +50,7 @@ const Model: ModelType = {
     *addThirdComment({ payload }, { call, put }) {
       const response = yield call(addThirdComment, payload);
       yield put({
-        type: 'getStairComment',
+        type: 'getThirdComment',
         payload: response,
       });
     },
@@ -52,7 +64,7 @@ const Model: ModelType = {
     },
     getThirdComment(state, action) {
       return {
-        ...(state as thirdCommentCallbackMessage),
+        ...(state as thirdComment),
         thirdCommentList: action.payload,
       };
     },

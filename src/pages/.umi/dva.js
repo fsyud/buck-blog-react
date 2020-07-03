@@ -23,6 +23,7 @@ export function _onCreate() {
   app.model({ namespace: 'articledetailmodels', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/articledetailmodels.ts').default) });
 app.model({ namespace: 'articlemodel', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/articlemodel.ts').default) });
 app.model({ namespace: 'commentmodel', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/commentmodel.ts').default) });
+app.model({ namespace: 'global', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/global.ts').default) });
 app.model({ namespace: 'projectmodel', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/projectmodel.ts').default) });
 app.model({ namespace: 'timelinemodel', ...(require('/Volumes/WorkSpace/Buck-blog-react/src/models/timelinemodel.ts').default) });
   return app;

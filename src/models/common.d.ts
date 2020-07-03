@@ -191,7 +191,7 @@ export interface articleList {
   message: string;
   data: {
     count: number;
-    list?: artDataList[];
+    list: artDataList[];
   };
 }
 
@@ -217,7 +217,7 @@ export interface thirdCommentInfo {
 }
 
 // 三级评论成功返回参数
-export interface thirdCommentCallbackMessage {
+export interface thirdComment {
   code: number;
   message: string;
   data: {

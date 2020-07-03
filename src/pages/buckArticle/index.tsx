@@ -7,8 +7,8 @@ import { connect } from 'dva';
 import {
   EyeOutlined, MessageOutlined ,LikeOutlined, FieldTimeOutlined
 } from '@ant-design/icons'
-import { articleState } from '@/models/articlemodel';
 import { articleList } from '@/models/common.d';
+import { articleInfo } from '@/models/articlemodel'
 import { timestampToTime } from '@/utils/tool/tool'
 import LazyLoad from 'react-lazy-load'
 import styles from './index.less';
@@ -17,7 +17,7 @@ import bg from '@/assets/icon/buck.png';
 const { Sider } = Layout;
 
 interface basicArticleProps extends ConnectProps {
-  articleList: Partial<articleList>;
+  articleList: articleList;
 }
 
 interface basicArticleStatae {
@@ -142,6 +142,8 @@ class Article extends React.Component<basicArticleProps, basicArticleStatae> {
   }
 }
 
-export default connect(({ articleSpace }: { articleSpace: articleState }) => ({
-  articleList: articleSpace.articleList,
-}))(Article)
+export default connect(
+  ({ articleSpace }: { articleSpace: articleInfo }) => ({
+    articleList: articleSpace.articleList,
+  })
+)(Article)

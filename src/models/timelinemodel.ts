@@ -7,6 +7,10 @@ export interface TimeLineState {
   currentLine?: Partial<TimeLine>;
 }
 
+export interface TimeLineInfo {
+  currentLine: TimeLine;
+}
+
 export interface ModelType {
   namespace: string;
   state: TimeLineState;

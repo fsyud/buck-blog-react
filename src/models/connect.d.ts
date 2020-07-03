@@ -6,5 +6,5 @@ import { Dispatch } from 'redux';
  */
 
 export interface ConnectProps {
-  dispatch?: Dispatch<any>;
+  dispatch: Dispatch<any>;
 }

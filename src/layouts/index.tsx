@@ -38,6 +38,7 @@ const defaultFooterDom = (
 export interface BasicLayoutProps {
   location?: any;
   history?: any;
+  forceUpdata: () => void;
 }
 
 const BasicLayout: React.FC<BasicLayoutProps> = props => {
@@ -54,9 +55,18 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
 
   isShowSlider = exceptRouter.some(s => s.includes(pathname.slice(1)))
 
+  const Refresh = (pam: boolean): void => {
+
+    // 登录完成后页面重载
+    if(pam) window.location.reload()
+  }
+
   return (
     <Layout className={styles.layouts}>
-      <BlogHeader currPath={pathname} />
+      <BlogHeader
+        currPath={pathname}
+        Refresh={Refresh}
+      />
       <Layout className={styles.layouts_second}>
         <Col span={ isShowSlider ? 24 : 17 }>
           <Content className={styles.content}>

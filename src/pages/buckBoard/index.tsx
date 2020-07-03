@@ -84,7 +84,7 @@ const tailFormItemLayout = {
 const RegistrationForm = () => {
   const [form] = Form.useForm();
 
-  const onFinish = values => {
+  const onFinish = (values: any) => {
     console.log('Received values of form: ', values);
   };
 
@@ -102,7 +102,7 @@ const RegistrationForm = () => {
   );
   const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
-  const onWebsiteChange = value => {
+  const onWebsiteChange = (value: any) => {
     if (!value) {
       setAutoCompleteResult([]);
     } else {

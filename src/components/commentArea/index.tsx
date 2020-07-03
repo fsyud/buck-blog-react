@@ -1,24 +1,27 @@
-import React, { FC, useEffect, useState} from 'react'
+import React, { FC, useState, useEffect} from 'react'
 import {Input, Button } from 'antd';
+import { GlobalCommentState } from '@/models/global'
+import { ConnectProps } from '@/models/connect';
+import { connect } from 'dva';
 import { MessageOutlined } from '@ant-design/icons'
 import styles from './index.less';
-import { commentsList } from '@/models/common.d';
 
 const { TextArea } = Input;
 
-interface basicCommentAreaProps {
-  sendReply: (val: string, item: Partial<commentsList>) => void;
-  curItem: Partial<commentsList>
+interface basicCommentAreaProps extends ConnectProps{
+  sendReply: (val: string, item: any, comment_id: string) => void;
+  curItem: any;
+  commentId: string;
+  thirdState?: boolean;
 }
 
 const CommentArea: FC<basicCommentAreaProps> = (props) => {
 
-  const { sendReply, curItem} = props;
+  const { sendReply, curItem, commentId } = props;
 
   const [ curCommentAreaState, setCurCommentAreaState ] = useState<boolean>(false)
 
   const [ commentContent, setCommentContent ] = useState<string>('');
-
 
   // 设置area state
   const commentAreaState = (): void => {
@@ -32,11 +35,25 @@ const CommentArea: FC<basicCommentAreaProps> = (props) => {
 
   // 回复
   const sendComment = (): void => {
-    if(sendReply) sendReply(commentContent, curItem)
+    if(sendReply) {
+      sendReply(commentContent, curItem, commentId)
+    }
   }
 
+  useEffect(() => {
+    if(props.thirdState) setCommentContent('')
+
+    props.dispatch({
+      type: 'global/thirdAreaState',
+      payload: false
+    })
+
+    setCurCommentAreaState(false)
+
+  }, [props.thirdState])
+
   // area change
-  const AreaChange = (e): void => {
+  const AreaChange = (e: any): void => {
     setCommentContent(e.target.value)
   }
 
@@ -85,4 +102,12 @@ const CommentArea: FC<basicCommentAreaProps> = (props) => {
   )
 }
 
-export default CommentArea;
+export default connect(
+  ({
+    global
+  }: {
+    global: GlobalCommentState
+  }) => ({
+  thirdState: global.thirdState,
+})
+)(CommentArea);

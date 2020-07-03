@@ -2,17 +2,25 @@ import React, { Component } from 'react';
 import {
   Layout, Spin, notification, Avatar, Button
 } from 'antd';
+import isEqual from 'lodash/isEqual'
 import { TagOutlined, GithubOutlined, LikeOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
-import clone from 'lodash/clone'
-import { articleDetailState } from '@/models/articledetailmodels';
-import { commentState } from '@/models/commentmodel';
+import clone from 'lodash/clone';
+import { articleDetailInfo } from '@/models/articledetailmodels';
+import { commentInfo } from '@/models/commentmodel'
 import { ConnectProps } from '@/models/connect';
+import { GlobalCommentState } from '@/models/global'
 import { sessionStorageGet } from '@/utils/tool/tool'
 import Comment from '@/components/comments/comment'
 import CommentList from '@/components/comments/list'
+import { commentsList } from '@/models/common.d'
 import { isMobileOrPc, timestampToTime } from '@/utils/tool/tool';
-import { articleDetailist, stairComment, thirdCommentInfo} from '@/models/common.d';
+import {
+  articleDetailist,
+  stairComment,
+  thirdCommentInfo,
+  thirdComment,
+} from '@/models/common.d';
 import author from '@/assets/avatar/cat.jpeg';
 
 import styles from './index.less';
@@ -29,26 +37,33 @@ const siderSpin = (
 
 interface basicArticleDetailProps extends ConnectProps {
   articleDetailList: Partial<articleDetailist>;
-  stairCommentList: Partial<stairComment>
+  stairCommentList: Partial<stairComment>;
+  thirdCommentList: Partial<thirdComment>;
   location?: any;
+  stairState: boolean;
+  thirdState: boolean;
 }
 
 interface basicArticleDetailState {
   dataState: boolean;
   isPc: boolean;
-  leaveWord: string;
-  StairComState: Array<[]>;
+  isStair: boolean;
+  isThird: boolean;
+  articleState: string;
+  StairComState: commentsList[];
 }
 
 class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetailState> {
   state: basicArticleDetailState = {
     dataState: false,
     isPc: isMobileOrPc(),
-    leaveWord: '',
-    StairComState: []
+    StairComState: [],
+    isStair: false,
+    isThird: false,
+    articleState: ''
   };
 
-  componentDidMount() {
+  refresh() {
     const {
       dispatch,
       location: { query },
@@ -62,28 +77,62 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
     });
   }
 
+  componentDidMount() {
+    this.refresh()
+  }
+
+  componentWillReceiveProps(nextProps: any) {
+    const [
+      sta_stair, sta_third
+    ]  =  [
+      isEqual(this.props.stairCommentList, nextProps.stairCommentList),
+      isEqual(this.props.thirdCommentList, nextProps.thirdCommentList)
+    ];
+
+    if(sta_stair && sta_third) return
+
+    if(!sta_stair) {
+      notification.warn({
+        message: nextProps.stairCommentList.message,
+        duration: 0.8,
+      });
+
+      this.refresh()
+
+      this.props.dispatch({
+        type: 'global/stairAreaState',
+        payload: true
+      });
+    }
+
+    if(!sta_third) {
+      notification.warn({
+        message: nextProps.thirdCommentList.message,
+        duration: 0.8,
+      });
+      this.refresh()
+      this.props.dispatch({
+        type: 'global/thirdAreaState',
+        payload: true
+      });
+    }
+  }
+
   componentDidUpdate() {
-    const { articleDetailList, stairCommentList } = this.props;
+    const { articleDetailList } = this.props;
 
     const noData =
       Object.keys(articleDetailList).length > 0 &&
       Object.getOwnPropertyNames(articleDetailList.data).length === 0;
 
+    // 文章未渲染 notification
     if (noData) {
       notification.info({
         message: articleDetailList.message,
         duration: 1,
       });
     }
-
-    if(Object.keys(stairCommentList).length > 0) {
-      notification.info({
-        message: stairCommentList.message,
-        duration: 1,
-      });
-    }
   }
-
 
   likeArticle() {
     console.log('likeArticle')
@@ -101,13 +150,12 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
 
     if (!data || curData) return siderSpin;
 
+    this.state.articleState = clone(data.content)
+
+    this.state.StairComState = clone(data.comments);
+
     const UserSession = sessionStorageGet('userInfo');
     const user_id = UserSession ? UserSession['_id'] : '';
-
-    // 一级留言框内容改变
-    const handleChange = ():void => {
-
-    }
 
     // 添加一级留言内容
     const handleAddComment = (content: string): void => {
@@ -117,25 +165,48 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
         article_id,
         content,
       }
+
+      if (content.length === 0) {
+        notification.warn({
+          message: '留言不为空！',
+          duration: 0.8,
+        })
+        return
+      }
+
       const stairPam = UserSession
-        ? Object.assign(clone(curPam), {hasUserInfo: true})
+        ? Object.assign({},clone(curPam), {hasUserInfo: true})
         : curPam
-      dispatch({
-        type: 'commentSpace/addStairComment',
-        payload: stairPam
-      })
+
+        dispatch({
+          type: 'commentSpace/addStairComment',
+          payload: stairPam
+        })
     }
 
     // 添加三级留言内容
     const SendThirdComment = (val: thirdCommentInfo): void => {
       const toUser = JSON.stringify(val.to_user)
 
+      if (val.content.length === 0) {
+        notification.warn({
+          message: '留言不为空！',
+          duration: 0.8,
+        })
+        return
+      }
+
+      const thirdParam = UserSession
+        ? Object.assign({},val, {to_user: toUser}, {hasUserInfo: true})
+        : Object.assign({}, val, {to_user: toUser} )
+
       dispatch({
         type: 'commentSpace/addThirdComment',
-        payload: Object.assign(val, {to_user: toUser})
+        payload: thirdParam
       })
     }
 
+    // 定义布局宽度
     const [lWidth] = [isPc ? '100%' : '75%'];
 
     const articleLeft = (
@@ -198,7 +269,7 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
             id="content"
             className="article-detail"
             dangerouslySetInnerHTML={{
-              __html: data.content ? data.content : null,
+              __html: this.state.articleState,
             }}
           />
         </div>
@@ -212,15 +283,11 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
             赞
           </Button>
         </div>
-
         <Comment
-          content={this.state.leaveWord}
-          handleChange={handleChange}
           handleAddComment={handleAddComment}
         />
-
         <CommentList
-          list={data.comments}
+          list={this.state.StairComState}
           commentNumber={data.meta.comments}
           commentInfo={{
             article: query.article_id,
@@ -246,11 +313,16 @@ export default connect(
   ({
     articleDetailSpace,
     commentSpace,
+    global
   }: {
-    articleDetailSpace: articleDetailState,
-    commentSpace: commentState
+    articleDetailSpace: articleDetailInfo,
+    commentSpace: commentInfo
+    global: GlobalCommentState
   }) => ({
   articleDetailList: articleDetailSpace.articleDetailList,
-  stairCommentList: commentSpace.stairCommentList
+  stairCommentList: commentSpace.stairCommentList,
+  thirdCommentList: commentSpace.thirdCommentList,
+  stairState: global.stairState,
+  thirdState: global.thirdState
 })
 )(ArticleDetail);

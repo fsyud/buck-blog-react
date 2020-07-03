@@ -1,13 +1,15 @@
 import React, { FC, useEffect, useState} from 'react'
 import { Avatar, Input, Button } from 'antd';
+import { GlobalCommentState } from '@/models/global'
+import { ConnectProps } from '@/models/connect';
+import { connect } from 'dva';
 import styles from './index.less'
 
 const { TextArea } = Input;
 
-interface basicCommentProps {
-  content: string;
-  handleChange: () => void;
+interface basicCommentProps extends ConnectProps{
   handleAddComment: (content: string) => void;
+  stairState?: boolean;
 }
 
 interface UserInfo {
@@ -18,9 +20,9 @@ interface UserInfo {
 
 const Comment: FC<basicCommentProps> = (props) => {
 
-  const { content, handleChange, handleAddComment} = props;
+  const { handleAddComment} = props;
 
-  const [ curUserInfo, setCurUserInfo] = useState<Partial<UserInfo> | undefined>(undefined)
+  const [ curUserInfo, setCurUserInfo] = useState<Partial<UserInfo>>({})
   const [ commentContent, setCommentContent ] = useState<string>('')
 
   useEffect(() => {
@@ -30,11 +32,22 @@ const Comment: FC<basicCommentProps> = (props) => {
     }
   }, [])
 
+
+  useEffect(() => {
+    if(props.stairState) setCommentContent('')
+
+    props.dispatch({
+      type: 'global/stairAreaState',
+      payload: false
+    })
+
+  }, [props.stairState])
+
   const submitComment = (): void => {
     if(handleAddComment) handleAddComment(commentContent)
   }
 
-  const AreaChange = (e): void => {
+  const AreaChange = (e: any): void => {
     setCommentContent(e.target.value)
   }
 
@@ -79,4 +92,12 @@ const Comment: FC<basicCommentProps> = (props) => {
   );
 }
 
-export default Comment;
+export default connect(
+  ({
+    global
+  }: {
+    global: GlobalCommentState
+  }) => ({
+  stairState: global.stairState,
+})
+)(Comment);

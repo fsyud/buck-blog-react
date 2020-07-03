@@ -4,7 +4,11 @@ import { queryArticleList } from '@/service/articleservice';
 import { articleList } from './common.d';
 
 export interface articleState {
-  articleList?: Partial<articleList>;
+  articleList: Partial<articleList>;
+}
+
+export interface articleInfo {
+  articleList: articleList;
 }
 
 export interface ModelType {

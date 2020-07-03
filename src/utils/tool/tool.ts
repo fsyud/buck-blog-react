@@ -32,7 +32,7 @@ export const isMobileOrPc = () => {
 }
 
 //存sessionStorage
-export const sessionStorageSet = (name, obj) => {
+export const sessionStorageSet = (name: string, obj: any) => {
   if (typeof obj === 'undefined') {
     return false
   }
@@ -51,7 +51,7 @@ export const sessionStorageSet = (name, obj) => {
 }
 
 // 取sessionStorage
-export const sessionStorageGet = (name) => {
+export const sessionStorageGet = (name: string) => {
   if (typeof name !== 'string') {
     return
   }
@@ -73,7 +73,7 @@ export const sessionStorageGet = (name) => {
 }
 
 // 删除sessionStorage
-export const sessionStorageRemove = (name) => {
+export const sessionStorageRemove = (name: string) => {
   if (typeof name !== 'string') {
     return
   }
