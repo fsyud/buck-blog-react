@@ -167,6 +167,7 @@ export interface articleDetailist {
     updara_time: Data;
     id: number;
     __v: number;
+    toc: string;
   };
 }
 

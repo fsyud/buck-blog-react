@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Layout, Spin, notification, Avatar, Button
+  Layout, Spin, notification, Avatar, Button, message
 } from 'antd';
 import isEqual from 'lodash/isEqual'
 import { TagOutlined, GithubOutlined, LikeOutlined } from '@ant-design/icons';
@@ -10,11 +10,13 @@ import { articleDetailInfo } from '@/models/articledetailmodels';
 import { commentInfo } from '@/models/commentmodel'
 import { ConnectProps } from '@/models/connect';
 import { GlobalCommentState } from '@/models/global'
-import { sessionStorageGet } from '@/utils/tool/tool'
 import Comment from '@/components/comments/comment'
 import CommentList from '@/components/comments/list'
 import { commentsList } from '@/models/common.d'
-import { isMobileOrPc, timestampToTime } from '@/utils/tool/tool';
+import { warnInfo } from '@/constant/_common'
+import { isMobileOrPc, timestampToTime, sessionStorageGet } from '@/utils/tool/tool';
+import './marked.css'
+
 import {
   articleDetailist,
   stairComment,
@@ -51,6 +53,7 @@ interface basicArticleDetailState {
   isThird: boolean;
   articleState: string;
   StairComState: commentsList[];
+  toc: string;
 }
 
 class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetailState> {
@@ -60,7 +63,8 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
     StairComState: [],
     isStair: false,
     isThird: false,
-    articleState: ''
+    articleState: '',
+    toc: ''
   };
 
   refresh() {
@@ -92,7 +96,7 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
     if(sta_stair && sta_third) return
 
     if(!sta_stair) {
-      notification.warn({
+      notification.info({
         message: nextProps.stairCommentList.message,
         duration: 0.8,
       });
@@ -106,7 +110,7 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
     }
 
     if(!sta_third) {
-      notification.warn({
+      notification.info({
         message: nextProps.thirdCommentList.message,
         duration: 0.8,
       });
@@ -150,9 +154,11 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
 
     if (!data || curData) return siderSpin;
 
-    this.state.articleState = clone(data.content)
+    this.state.articleState = clone(data.content);
 
     this.state.StairComState = clone(data.comments);
+
+    this.state.toc = clone(data.toc);
 
     const UserSession = sessionStorageGet('userInfo');
     const user_id = UserSession ? UserSession['_id'] : '';
@@ -168,10 +174,15 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
 
       if (content.length === 0) {
         notification.warn({
-          message: '留言不为空！',
+          message: warnInfo.commentNull,
           duration: 0.8,
         })
         return
+      }
+
+      if(!UserSession) {
+        message.info(warnInfo.login)
+        return;
       }
 
       const stairPam = UserSession
@@ -190,7 +201,7 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
 
       if (val.content.length === 0) {
         notification.warn({
-          message: '留言不为空！',
+          message: warnInfo.commentNull,
           duration: 0.8,
         })
         return
@@ -204,6 +215,11 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
         type: 'commentSpace/addThirdComment',
         payload: thirdParam
       })
+
+      if(!UserSession) {
+        message.info(warnInfo.login)
+        return;
+      }
     }
 
     // 定义布局宽度
@@ -297,8 +313,20 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
         />
       </div>
     );
-
-    const articleRight = <div className={styles.article_right}>2</div>;
+    const articleRight = (
+      <div className={styles.article_right}>
+      {!isMobileOrPc()? (
+        <div
+          className={styles.toc_index}
+          dangerouslySetInnerHTML={{
+            __html: this.state.toc
+          }}
+        />
+      ) : (
+        <div></div>
+      )}
+      </div>
+    )
 
     return (
       <div className={styles.article}>

@@ -13,11 +13,9 @@ export interface addTagParam {
   icon?: string
 }
 
-//
-export interface addArticleParam {
-  title: string;
-  author: string;
-  content: string
+// 获取文章列表
+export interface queryArticleParam {
+  pageSize?: string;
 }
 
 // 获取文章详情

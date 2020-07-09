@@ -12,7 +12,6 @@ import { articleInfo } from '@/models/articlemodel'
 import { timestampToTime } from '@/utils/tool/tool'
 import LazyLoad from 'react-lazy-load'
 import styles from './index.less';
-import bg from '@/assets/icon/buck.png';
 
 const { Sider } = Layout;
 
@@ -44,6 +43,9 @@ class Article extends React.Component<basicArticleProps, basicArticleStatae> {
     const { dispatch } = this.props;
     dispatch({
       type: 'articleSpace/getArticleList',
+      payload: {
+        pageSize: '200'
+      }
     });
   }
 
@@ -73,7 +75,7 @@ class Article extends React.Component<basicArticleProps, basicArticleStatae> {
                 className="img-blur-done"
                 data-src={item.img_url}
                 data-has-lazy-src="false"
-                src={bg}
+                src={item.img_url}
                 alt="文章封面"
               />
             </LazyLoad>

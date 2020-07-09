@@ -1,12 +1,12 @@
 import request from '@/utils/request'
 
 import {
-  addArticleParam
+  queryArticleParam
 } from './data.d'
 
-export async function queryArticleList(params: addArticleParam) {
+export async function queryArticleList(params: queryArticleParam) {
   return request('/api/queryArticleList', {
-    method: 'get',
-    data: params
+    method: 'GET',
+    params
   })
 }

@@ -2,6 +2,8 @@
 @base-ml: 20px;
 
 .article {
+  overflow: hidden;
+
   .article_left {
     float: left;
     // border: 1px red solid;
@@ -120,7 +122,27 @@
   .article_right {
     float: right;
     width: 23%;
-    border: 1px black solid;
+
+    .toc_index {
+      position: sticky;
+      top: 300px;
+      margin-top: 300px;
+      border-left: 1px solid #eee;
+
+      .anchor-ul {
+        position: relative;
+        top: 0;
+        max-width: 250px;
+        border: none;
+        -moz-box-shadow: 0 0px 0px #fff;
+        -webkit-box-shadow: 0 0px 0px #fff;
+        box-shadow: 0 0px 0px #fff;
+        li.active {
+          color: #009a61;
+        }
+      }
+
+    }
   }
 }
 

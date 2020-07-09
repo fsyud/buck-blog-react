@@ -46,6 +46,9 @@ const config: IConfig = {
   },
   publicPath: './',
   proxy: proxy[REACT_APP_ENV || 'dev'],
+  cssLoaderOptions: {
+    localIdentName: '[local]'
+  }
 };
 
 export default config;

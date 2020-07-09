@@ -23,7 +23,6 @@ import RegisterModal from '@/components/registerModal'
 import styles from './index.less';
 import logo from '@/assets/icon/buck.png';
 import sculpture from '@/assets/avatar/cat.jpeg';
-import { async } from 'q';
 
 interface HeaderRightProps extends ConnectProps {
   currPath?: string;
