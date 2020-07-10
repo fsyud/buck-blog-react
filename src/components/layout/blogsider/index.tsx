@@ -12,7 +12,7 @@ const { Sider } = Layout
 
 // define sider spin
 const siderSpin = (
-  <Sider className={styles.sider}><Spin /></Sider>
+  <Spin />
 )
 
 interface tagBasicProps {
@@ -51,17 +51,19 @@ export const BlogSider: FC<tagBasicProps> = props => {
         size={130}
         icon={<UserOutlined />}
       />
-      <h4>标签云</h4>
+      <h4>{tagList.length == 0 ? '' :'标签云'}</h4>
       <div>
         {
-          tagList.map(ele => (
-            <Tag
-              key={ele._id}
-              color={ele.color}
-            >
-              {ele.name}
-            </Tag>
-          ))
+          tagList.length == 0
+            ? siderSpin
+            : tagList.map(ele => (
+              <Tag
+                key={ele._id}
+                color={ele.color}
+              >
+                {ele.name}
+              </Tag>
+            ))
         }
       </div>
     </Sider>

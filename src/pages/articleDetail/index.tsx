@@ -32,8 +32,8 @@ const { Sider } = Layout;
 
 // define sider spin
 const siderSpin = (
-  <Sider className={styles.sider}>
-    <Spin />
+  <Sider className={styles.siderSpin}>
+    <Spin size="large" />
   </Sider>
 );
 
@@ -54,6 +54,7 @@ interface basicArticleDetailState {
   articleState: string;
   StairComState: commentsList[];
   toc: string;
+  tocStyle: any;
 }
 
 class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetailState> {
@@ -64,7 +65,8 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
     isStair: false,
     isThird: false,
     articleState: '',
-    toc: ''
+    toc: '',
+    tocStyle: ''
   };
 
   refresh() {
@@ -83,6 +85,16 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
 
   componentDidMount() {
     this.refresh()
+    document.addEventListener('scroll', () => {
+      // const curScrollTop = document.documentElement.scrollTop
+      //   this.setState({
+      //     tocStyle: curScrollTop < 100 ? 100 :  curScrollTop
+      //   })
+
+      // throttle(() => {
+      //   console.log('aa')
+      // }, 200)
+    });
   }
 
   componentWillReceiveProps(nextProps: any) {

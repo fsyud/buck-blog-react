@@ -16,7 +16,6 @@ import { GithubOutlined, MailOutlined } from '@ant-design/icons'
 
 import BlogMenu from './../blogmenu';
 import { NavList } from '@/constant/_common'
-import { ConnectProps } from '@/models/connect';
 import { registerParam } from '@/service/data.d'
 import { sessionStorageSet, sessionStorageRemove } from '@/utils/tool/tool'
 import RegisterModal from '@/components/registerModal'
@@ -24,7 +23,7 @@ import styles from './index.less';
 import logo from '@/assets/icon/buck.png';
 import sculpture from '@/assets/avatar/cat.jpeg';
 
-interface HeaderRightProps extends ConnectProps {
+interface HeaderRightProps {
   currPath?: string;
   Refresh: (pam: boolean) => void;
 }
@@ -67,7 +66,6 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
   render() {
     const { currPath, Refresh} = this.props;
     const { visible, action, loginState, curUser } = this.state;
-
 
     // 登出
     const onClick = ({ key }: any) => {
@@ -217,7 +215,7 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
         <Header className={styles.header}>
           <Row>
             <Col span={3}>{defaultLogoDom}</Col>
-            <Col span={15}>
+            <Col span={14}>
               <BlogMenu NavList={NavList} menuSelect={currPath} />
             </Col>
             <Col span={6}>

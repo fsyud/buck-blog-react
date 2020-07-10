@@ -50,18 +50,20 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
   if(pathname === '/') history.push('/buckHome')
 
   const exceptRouter = [
-    'buckCenter', 'articleDetail'
+    'buckCenter', 'articleDetail', 'buckHome'
   ]
+
+  // const isHome = pathname.includes('buckHome')
 
   isShowSlider = exceptRouter.some(s => s.includes(pathname.slice(1)))
 
   const Refresh = (pam: boolean): void => {
-
     // 登录完成后页面重载
     if(pam) window.location.reload()
   }
 
-  return (
+
+  const basic = (
     <Layout className={styles.layouts}>
       <BlogHeader
         currPath={pathname}
@@ -77,6 +79,17 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
       </Layout>
       {defaultFooterDom}
     </Layout>
+  )
+
+  // const blank = (
+  //   <div>{props.children}</div>
+  // )
+
+  return (
+    <div>
+      {basic}
+    </div>
+
   )
 }
 

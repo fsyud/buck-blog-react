@@ -6,6 +6,7 @@ const { REACT_APP_ENV } = process.env
 // ref: https://umijs.org/config/
 const config: IConfig = {
   treeShaking: true,
+  hash: true,
   // 浏览器兼容版本
   targets: {
     android: 5,

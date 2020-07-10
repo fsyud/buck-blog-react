@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Result,  Button } from 'antd';
 
 class Users extends Component<{}> {
+
+  componentDidMount() {}
+
   render() {
     return (
       <div>
