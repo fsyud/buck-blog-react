@@ -6,7 +6,7 @@ import styles from './index.less'
 import getApi from '@/utils/tool/api'
 import request from 'umi-request'
 import { UserOutlined } from '@ant-design/icons'
-import sculpture from '@/assets/avatar/cat.jpeg'
+import sculpture from '@/assets/avatar/cat.png'
 
 const { Sider } = Layout
 

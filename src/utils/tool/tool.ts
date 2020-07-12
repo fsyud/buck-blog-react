@@ -1,5 +1,5 @@
 //// 时间 格式化成 2018-12-12 12:12:00
-export const timestampToTime = (timestamp, dayMinSecFlag) => {
+export const timestampToTime = (timestamp: any, dayMinSecFlag?: any) => {
   const date = new Date(timestamp);
   const Y = date.getFullYear() + '-';
   const M =

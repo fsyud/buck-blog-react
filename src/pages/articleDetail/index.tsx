@@ -23,7 +23,7 @@ import {
   thirdCommentInfo,
   thirdComment,
 } from '@/models/common.d';
-import author from '@/assets/avatar/cat.jpeg';
+import author from '@/assets/avatar/cat.png';
 
 import styles from './index.less';
 import './marked.css';
@@ -282,10 +282,10 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
             <div className={styles.l_tags} title="标签">
               {data.tags.length > 0
                 ? data.tags.map(s => (
-                    <span key={s.id}>
+                    <div key={s.id} className={styles.l_tag_info}>
                       <TagOutlined twoToneColor="#52c41a" />
                       {s.name}
-                    </span>
+                    </div>
                   ))
                 : null}
             </div>

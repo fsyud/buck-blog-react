@@ -1,32 +1,31 @@
 import React from 'react';
-import { Skeleton, Switch, Card, Spin } from 'antd';
+import { Card, Spin } from 'antd';
 import { connect } from 'dva'
 import { Project } from '@/models/common.d'
-import { ProjectState } from '@/models/projectmodel'
+import { ProjectStateType } from '@/models/projectmodel'
 import { ConnectProps } from '@/models/connect';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import styles from './index.less'
+import { timestampToTime } from '@/utils/tool/tool'
 
 const { Meta } = Card;
 
 export interface ProjectProps extends ConnectProps {
-  currentProject?: Project;
+  lsit: Partial<Project>;
 }
 
 class buckItem extends React.Component<ProjectProps> {
   componentDidMount() {
     const { dispatch } = this.props;
     dispatch({
-      type: 'projectModelSpace/fetchCurrentProject',
+      type: 'projectModel/fetchProject',
     });
   }
 
   render() {
-    const { currentProject } = this.props
+    const { list: {data} } = this.props;
 
-    const { data } = currentProject
-
-    if (!data) return (<div className={styles.Spin}><Spin /></div>)
+    if(!data) return (<div className={styles.Spin}><Spin /></div>)
 
     const curProjectList = data.list
 
@@ -50,9 +49,9 @@ class buckItem extends React.Component<ProjectProps> {
                 >
                   <Meta title={item.title} description={item.content} />
                   <span>
-                    { item.start_time }
+                    {timestampToTime(item.start_time)}
                     --
-                    { item.end_time }
+                    {timestampToTime(item.end_time)}
                   </span>
                 </Card>
               </a>
@@ -64,7 +63,7 @@ class buckItem extends React.Component<ProjectProps> {
   }
 }
 
-export default connect(({ projectModelSpace }: { projectModelSpace: ProjectState }) => ({
-  currentProject: projectModelSpace.currentProject,
+export default connect(({ projectModel }: { projectModel: ProjectStateType }) => ({
+  list: projectModel.list
 }))(buckItem);
 

@@ -1,44 +1,44 @@
 import { Reducer} from 'redux'
 import { Effect } from 'dva'
-import { queryProjectInfo } from '@/service/projectservice'
+import { queryProjectList } from '@/service/projectservice'
 import { Project } from './common.d'
 
-export interface ProjectState {
-  currentProject?: Partial<Project>;
+export interface ProjectStateType {
+  list?: Partial<Project>;
 }
 
 export interface currentProjectModelType {
   namespace: string;
-  state: ProjectState;
+  state: ProjectStateType;
   effects: {
-    fetchCurrentProject: Effect,
+    fetchProject: Effect,
   };
   reducers: {
-    saveCurrenProject: Reducer<ProjectState>;
+    curProject: Reducer<ProjectStateType>;
   };
 }
 
 const Model: currentProjectModelType = {
-  namespace: 'projectModelSpace',
+  namespace: 'projectModel',
 
   state: {
-    currentProject: {}
+    list: {}
   },
 
   effects: {
-    *fetchCurrentProject(_, {call, put}) {
-      const response = yield call(queryProjectInfo);
+    *fetchProject(_, {call, put}) {
+      const response = yield call(queryProjectList);
       yield put({
-        type: 'saveCurrenProject',
+        type: 'curProject',
         payload: response,
       });
     }
   },
   reducers: {
-    saveCurrenProject(state, action) {
+    curProject(state, action) {
       return {
-        ...(state as ProjectState),
-        currentProject: action.payload || {},
+        ...state,
+        list: action.payload,
       };
     },
   }

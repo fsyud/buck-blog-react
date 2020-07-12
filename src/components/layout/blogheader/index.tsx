@@ -21,7 +21,7 @@ import { sessionStorageSet, sessionStorageRemove } from '@/utils/tool/tool'
 import RegisterModal from '@/components/registerModal'
 import styles from './index.less';
 import logo from '@/assets/icon/buck.png';
-import sculpture from '@/assets/avatar/cat.jpeg';
+import sculpture from '@/assets/avatar/cat.png';
 
 interface HeaderRightProps {
   currPath?: string;

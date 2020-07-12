@@ -53,7 +53,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
     'buckCenter', 'articleDetail', 'buckHome'
   ]
 
-  // const isHome = pathname.includes('buckHome')
+  const isHome = pathname.includes('buckHome')
 
   isShowSlider = exceptRouter.some(s => s.includes(pathname.slice(1)))
 
@@ -81,13 +81,13 @@ const BasicLayout: React.FC<BasicLayoutProps> = props => {
     </Layout>
   )
 
-  // const blank = (
-  //   <div>{props.children}</div>
-  // )
+  const blank = (
+    <div>{props.children}</div>
+  )
 
   return (
     <div>
-      {basic}
+      {isHome ? blank : basic}
     </div>
 
   )

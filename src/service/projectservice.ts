@@ -1,7 +1,7 @@
 import request from '@/utils/request'
 
-export async function queryProjectInfo() {
-  return request('/api/currentProjectList', {
+export async function queryProjectList() {
+  return request('/api/queryProjectList', {
     method: 'GET'
   })
 }
