@@ -6,6 +6,7 @@ import isEqual from 'lodash/isEqual'
 import { TagOutlined, GithubOutlined, LikeOutlined } from '@ant-design/icons';
 import { connect } from 'dva';
 import clone from 'lodash/clone';
+import request  from 'umi-request';
 import { articleDetailInfo } from '@/models/articledetailmodels';
 import { commentInfo } from '@/models/commentmodel'
 import { ConnectProps } from '@/models/connect';
@@ -55,6 +56,7 @@ interface basicArticleDetailState {
   StairComState: commentsList[];
   toc: string;
   tocStyle: any;
+  UserSession: string;
 }
 
 class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetailState> {
@@ -66,7 +68,8 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
     isThird: false,
     articleState: '',
     toc: '',
-    tocStyle: ''
+    tocStyle: '',
+    UserSession: ''
   };
 
   refresh() {
@@ -85,6 +88,8 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
 
   componentDidMount() {
     this.refresh()
+
+    this.state.UserSession = sessionStorageGet('userInfo');
     document.addEventListener('scroll', () => {
       // const curScrollTop = document.documentElement.scrollTop
       //   this.setState({
@@ -150,9 +155,7 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
     }
   }
 
-  likeArticle() {
-    console.log('likeArticle')
-  }
+
 
   render() {
     const {
@@ -172,8 +175,9 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
 
     this.state.toc = clone(data.toc);
 
-    const UserSession = sessionStorageGet('userInfo');
-    const user_id = UserSession ? UserSession['_id'] : '';
+    const user_id = this.state.UserSession
+      ? this.state.UserSession['_id']
+      : '';
 
     // 添加一级留言内容
     const handleAddComment = (content: string): void => {
@@ -192,12 +196,12 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
         return
       }
 
-      if(!UserSession) {
+      if(!this.state.UserSession) {
         message.info(warnInfo.login)
         return;
       }
 
-      const stairPam = UserSession
+      const stairPam = this.state.UserSession
         ? Object.assign({},clone(curPam), {hasUserInfo: true})
         : curPam
 
@@ -219,7 +223,7 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
         return
       }
 
-      const thirdParam = UserSession
+      const thirdParam = this.state.UserSession
         ? Object.assign({},val, {to_user: toUser}, {hasUserInfo: true})
         : Object.assign({}, val, {to_user: toUser} )
 
@@ -228,10 +232,32 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
         payload: thirdParam
       })
 
-      if(!UserSession) {
+      if(!this.state.UserSession) {
         message.info(warnInfo.login)
         return;
       }
+    }
+
+    // 点赞
+    const likeArticle = ():void => {
+      const { article_id } = query;
+
+      if(!this.state.UserSession){
+        message.info(warnInfo.login)
+        return;
+      }
+
+      request.post('/api/likeArticle',{
+        data: {
+          id: article_id,
+          user_id: this.state.UserSession['_id']
+        }
+      }).then(res => {
+        message.info(res.message)
+      })
+      .catch(function(error) {
+        message.info(error)
+      });
     }
 
     // 定义布局宽度
@@ -305,7 +331,7 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
           <Button
             type="primary"
             size="large"
-            onClick={this.likeArticle}
+            onClick={likeArticle}
           >
             <LikeOutlined />
             赞

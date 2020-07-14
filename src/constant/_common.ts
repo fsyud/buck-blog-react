@@ -5,7 +5,8 @@ export const RandomColor = [
 
 export const warnInfo = {
   login: '您还没登录,或者登录信息已过期，请重新登录！',
-  commentNull: '留言不为空哦！'
+  commentNull: '留言不为空哦！',
+  like: '点赞成功👍！'
 }
 
 export const NavList = {

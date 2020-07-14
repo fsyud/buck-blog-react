@@ -152,7 +152,7 @@ class BlogHeader extends React.Component<HeaderRightProps, HeaderRightState> {
       if (act === 'register') {
         request('/api/register', {
           method: 'post',
-          data: { ...val },
+          data: { ...val, type: 1 },
         })
           .then(res => {
             notification.info({
