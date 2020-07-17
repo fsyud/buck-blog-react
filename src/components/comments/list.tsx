@@ -1,26 +1,26 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Avatar } from 'antd';
-import { timestampToTime } from '@/utils/tool/tool'
-import { UserOutlined } from '@ant-design/icons'
-import { commentsList, thirdCommentInfo} from '@/models/common.d';
-import CommentArea from '@/components/commentArea'
+import { timestampToTime } from '@/utils/tool/tool';
+import { UserOutlined } from '@ant-design/icons';
+import { commentsList, thirdCommentInfo } from '@/models/common.d';
+import CommentArea from '@/components/commentArea';
 import styles from './index.less';
 
 interface basicCommentListProps {
   list: commentsList[];
   commentNumber: number;
   commentInfo: {
-    article: string,
-    user: string
+    article: string;
+    user: string;
   };
   thirdCommentSend: (val: thirdCommentInfo) => void;
 }
 const CommentList: FC<basicCommentListProps> = props => {
-  const {list, commentNumber, commentInfo, thirdCommentSend} = props;
+  const { list, commentNumber, commentInfo, thirdCommentSend } = props;
 
   const sendReply = (val: string, item: any, comment_id: string): void => {
-    const { user_id, avatar, name, type} = item.user
+    const { user_id, avatar, name, type } = item.user;
 
     const thirdPam = {
       user_id: commentInfo.user,
@@ -31,13 +31,13 @@ const CommentList: FC<basicCommentListProps> = props => {
         user_id,
         avatar,
         name,
-        type
-      }
+        type,
+      },
+    };
+    if (thirdCommentSend) {
+      thirdCommentSend(thirdPam as thirdCommentInfo);
     }
-    if(thirdCommentSend) {
-      thirdCommentSend(thirdPam as thirdCommentInfo)
-    }
-  }
+  };
 
   return (
     <div className={styles.comment_list}>
@@ -58,64 +58,51 @@ const CommentList: FC<basicCommentListProps> = props => {
               <div className={styles.item_header}>
                 <div className={styles.author}>
                   <div className={styles.avator}>
-                    <Avatar
-                      size={45}
-                      src={item.user.avatar}
-                      icon={<UserOutlined/>}
-                    />
+                    <Avatar size={45} src={item.user.avatar} icon={<UserOutlined />} />
                   </div>
                 </div>
                 <div className={styles.info}>
                   <div className={styles.name}>
                     {item.user.name}
-                    {item.user.type === 0 ? '(作者)' : ''}
+                    {item.user.type === 0 ? <span className={styles.ant_author}>博主</span> : ''}
                   </div>
                   <div className={styles.time}>
                     {item.create_time ? timestampToTime(item.create_time, true) : ''}
                   </div>
                 </div>
               </div>
-              <div className={styles.comment_detail}>
-                {item.content}
-              </div>
-              <CommentArea
-                sendReply={sendReply}
-                curItem={item}
-                commentId={item._id}
-              />
+              <div className={styles.comment_detail}>{item.content}</div>
+              <CommentArea sendReply={sendReply} curItem={item} commentId={item._id} />
               {item.other_comments.map(el => (
                 <div key={el._id} className={styles.item_other}>
                   <div className={styles.item_header}>
                     <div className={styles.author}>
                       <div className={styles.avator}>
-                        <Avatar
-                          size={45}
-                          src={el.user.avatar}
-                          icon={<UserOutlined/>}
-                        />
+                        <Avatar size={45} src={el.user.avatar} icon={<UserOutlined />} />
                       </div>
                     </div>
                     <div className={styles.info}>
                       <div className={styles.name}>
                         {el.user.name}
-                        {el.user.type === 0 ? '(作者)' : ''}
+                        {el.user.type === 0 ? (
+                          <span className={styles.ant_author}>博主</span>
+                        ) : (
+                          ''
+                        )}
                       </div>
                       <div className={styles.time}>
-                        {el.create_time
-                          ? timestampToTime(el.create_time, true)
-                          : ''}
+                        {el.create_time ? timestampToTime(el.create_time, true) : ''}
                       </div>
                     </div>
                   </div>
                   <div className={styles.comment_detail}>
-                    {'@' + el.to_user.name}
-                    {el.to_user.type === 0 ? '(作者)' : ''}：{el.content}
+                    {<span className={styles.ant_info_others}>
+                      {'@' + el.to_user.name}
+                      {el.to_user.type === 0 ? <span className={styles.ant_author}>博主</span> : ''}
+                    </span>}
+                    {el.content}
                   </div>
-                  <CommentArea
-                    sendReply={sendReply}
-                    curItem={el}
-                    commentId={item._id}
-                  />
+                  <CommentArea sendReply={sendReply} curItem={el} commentId={item._id} />
                 </div>
               ))}
             </div>

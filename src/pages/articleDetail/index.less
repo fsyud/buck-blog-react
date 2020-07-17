@@ -112,6 +112,31 @@
     .l_content {
       min-height: 300px;
       margin-top: 20px;
+
+
+      .article_detail {
+        font-size: 16px;
+        line-height: 30px;
+
+        h1 {
+          font-size: 24px;
+          font-weight: 700;
+        }
+
+        blockquote {
+          margin: 0 0 1em;
+          color: rgba(0,0, 0, .8);
+          font-weight: bold;
+          background-color: #dcedf7;
+          border-left: 8px solid #8acaf1;
+          padding: 16px;
+
+          p {
+            margin-bottom: 0;
+          }
+        }
+      }
+
     }
 
     .heart {
@@ -138,11 +163,11 @@
         -moz-box-shadow: 0 0px 0px #fff;
         -webkit-box-shadow: 0 0px 0px #fff;
         box-shadow: 0 0px 0px #fff;
-        li.active {
-          color: #009a61;
+
+        li a {
+          font-size: 14px;
         }
       }
-
     }
   }
 }

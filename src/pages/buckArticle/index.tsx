@@ -10,6 +10,7 @@ import {
 import { articleList } from '@/models/common.d';
 import { articleInfo } from '@/models/articlemodel'
 import { timestampToTime } from '@/utils/tool/tool'
+import BackTopCt from '@/components/backTop'
 import LazyLoad from 'react-lazy-load'
 import styles from './index.less';
 
@@ -31,6 +32,7 @@ const siderSpin = (
     <Spin />
   </Sider>
 );
+
 
 class Article extends React.Component<basicArticleProps, basicArticleStatae> {
   state: basicArticleStatae = {
@@ -122,6 +124,7 @@ class Article extends React.Component<basicArticleProps, basicArticleStatae> {
             </div>
           </div>
         </li>
+        <BackTopCt />
       </ReactCSSTransitionGroup>
     ));
 

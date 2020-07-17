@@ -45,3 +45,46 @@ export const NavList = {
     }
   ]
 }
+
+export const boardText = [
+  {
+    txt: '🏉 总有一天，该有的总会有，该来的总会来。',
+    key: '1'
+  },
+  {
+    txt: '🎾 在自己的身上克服这个时代，克服它的混浊、粗粝、不近人情。',
+    key: '2'
+  },
+  {
+    txt: '🏀 克服它让我们燃烧了万丈豪情，又用一场场冷雨浇熄的任性。',
+    key: '3'
+  },
+  {
+    txt: '⛳️ 你要比我更加相信，在这条光荣的荆棘路上，星星之火，可以燎原。',
+    key: '4'
+  }
+]
+
+export const buckDesc = [
+  {
+    txt: '运行程序：后端node（express框架）基于pm2启动，代理使用nginx',
+    key: '1'
+  },
+  {
+    txt: '操作系统：Linux Centos7.2 X64 自定义镜像',
+    key: '2'
+  },
+  {
+    txt: '前端框架：React、umi、umi、antd、Ts,后端antd pro for react',
+    key: '3'
+  },
+  {
+    txt: '运行时间：2020.1.7 — 至今',
+    key: '4'
+  }
+]
+
+export const boardDesc = {
+  titleOne: '关于本站 🌈',
+  titleTwo: '您想说些什么吗？就在这里发表留言吧~ 欢迎留下任何宝贵建议和意见！我会尽量及时回复。🌈'
+}

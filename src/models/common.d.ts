@@ -223,6 +223,36 @@ export interface thirdComment {
   message: string;
   data: {
     count: number;
-    list?: artDataList[];
+    list: artDataList[];
+  };
+}
+
+export interface boardContent {
+  content: string;
+}
+
+// 留言板返回值
+export interface boardListItem {
+  user_id: string;
+  name: string;
+  avatar: string;
+  phone: string;
+  introduce: string;
+  email: string;
+  state: number;
+  _id: string;
+  content: string;
+  reply_list: boardContent[],
+  create_time: Date
+}
+
+
+// 留言板返回值
+export interface boardInfo {
+  code: number;
+  message: string;
+  data: {
+    count: number;
+    list: boardListItem[];
   };
 }

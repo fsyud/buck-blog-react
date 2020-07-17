@@ -2,9 +2,11 @@
 const hljs = require("highlight.js");
 const marked = require("marked");
 import 'highlight.js/styles/dracula.css'
+import { Anchor } from 'antd'
+
 
 const tocObj = {
-  add: function (text, level) {
+  add: function (text: any, level: any) {
     var anchor = `#toc${level}${++this.index}`;
     this.toc.push({ anchor: anchor, level: level, text: text });
     return anchor;
@@ -26,7 +28,7 @@ const tocObj = {
     const addEndUL = () => {
       result += "</ul>\n";
     };
-    const addLI = (anchor, text) => {
+    const addLI = (anchor: any, text: any) => {
       result +=
         '<li><a class="toc-link" href="#' + anchor + '">' + text + "<a></li>\n";
     };
@@ -68,6 +70,7 @@ class MarkUtils {
   constructor() {
     const rendererMD = new marked.Renderer();
     rendererMD.heading = function (text: any, level: any, raw: any) {
+      console.log(text, level)
       var anchor = tocObj.add(text, level);
       return `<h${level} id=${anchor}>${text}</h${level}>\n`;
     };

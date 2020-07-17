@@ -39,3 +39,10 @@ export interface thirdCommentParam {
   content: string;
   to_user: string;
 }
+
+// 获取留言板列表
+export interface queryBoardParam {
+  pageNum: number;
+  pageSize: number;
+  state: number;
+}

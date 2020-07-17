@@ -1,187 +1,76 @@
-import React, { useState } from 'react';
-import {
-  Form,
-  Input,
-  Tooltip,
-  Cascader,
-  Select,
-  Row,
-  Col,
-  Checkbox,
-  Button,
-  AutoComplete,
-} from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import ReactDOM from 'react-dom';
+import React, { FC, useEffect } from 'react';
+import { connect } from 'dva'
+import { Dispatch } from 'redux';
+import { Alert, Card } from 'antd'
+import { boardText, buckDesc, boardDesc} from '@/constant/_common'
+import BoardComment from '@/components/boardComment'
+import styles from './style.less'
 
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
-const residences = [
-  {
-    value: 'zhejiang',
-    label: 'Zhejiang',
-    children: [
+import { articleState } from '@/models/boardmodel';
+
+
+
+interface ListBasicListProps {
+  boardSpace: articleState;
+  dispatch: Dispatch;
+}
+
+export const buckBoard: FC<ListBasicListProps> = (props) => {
+  const {
+    dispatch,
+    boardSpace: { list }
+  } = props;
+
+
+  const initList = (): void => {
+    dispatch({
+      type: 'boardSpace/getMessageList',
+    });
+  }
+
+  useEffect(() => {
+    initList()
+
+    console.log(list)
+  }, [])
+
+  const handleAddComment = (val: string): void => {
+
+  }
+
+  return(
+    <div className={styles.board_message}>
       {
-        value: 'hangzhou',
-        label: 'Hangzhou',
-        children: [
-          {
-            value: 'xihu',
-            label: 'West Lake',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    value: 'jiangsu',
-    label: 'Jiangsu',
-    children: [
-      {
-        value: 'nanjing',
-        label: 'Nanjing',
-        children: [
-          {
-            value: 'zhonghuamen',
-            label: 'Zhong Hua Men',
-          },
-        ],
-      },
-    ],
-  },
-];
-const formItemLayout = {
-  labelCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 8,
-    },
-  },
-  wrapperCol: {
-    xs: {
-      span: 24,
-    },
-    sm: {
-      span: 16,
-    },
-  },
-};
-const tailFormItemLayout = {
-  wrapperCol: {
-    xs: {
-      span: 24,
-      offset: 0,
-    },
-    sm: {
-      span: 16,
-      offset: 8,
-    },
-  },
-};
+        boardText.map(el => (
+          <Alert key={el.key} message={el.txt} />
+        ))
+      }
+      <div className={styles.title}>{boardDesc.titleOne}</div>
+      <Card bordered={false} style={{ width: 300 }}>
+        {
+          buckDesc.map(el => (
+            <p key={el.key}>{el.txt}</p>
+          ))
+        }
+      </Card>
+      <div className={styles.title}>{boardDesc.titleTwo}</div>
+      <div className={styles.board_count}>
+        {list.length}条评论
+      </div>
+      <BoardComment
+        handleAddComment={handleAddComment}
+      />
 
-const RegistrationForm = () => {
-  const [form] = Form.useForm();
+    </div>
+  )
+}
 
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
-  };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
-  const [autoCompleteResult, setAutoCompleteResult] = useState([]);
-
-  const onWebsiteChange = (value: any) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(['.com', '.org', '.net'].map(domain => `${value}${domain}`));
-    }
-  };
-
-  const websiteOptions = autoCompleteResult.map(website => ({
-    label: website,
-    value: website,
-  }));
-  return (
-    <Form
-      {...formItemLayout}
-      form={form}
-      name="register"
-      onFinish={onFinish}
-      initialValues={{
-        residence: ['zhejiang', 'hangzhou', 'xihu'],
-        prefix: '86',
-      }}
-      scrollToFirstError
-    >
-      <Form.Item
-        name="email"
-        label="邮箱"
-        rules={[
-          {
-            type: 'email',
-            message: 'The input is not valid E-mail!',
-          },
-          {
-            required: true,
-            message: 'Please input your E-mail!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
-        name="password"
-        label="密码"
-        rules={[
-          {
-            required: true,
-            message: 'Please input your password!',
-          },
-        ]}
-        hasFeedback
-      >
-        <Input.Password />
-      </Form.Item>
-
-      <Form.Item
-        name="confirm"
-        label="github"
-        dependencies={['password']}
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: 'Please confirm your password!',
-          },
-          ({ getFieldValue }) => ({
-            validator(rule, value) {
-              if (!value || getFieldValue('password') === value) {
-                return Promise.resolve();
-              }
-
-              return Promise.reject('The two passwords that you entered do not match!');
-            },
-          }),
-        ]}
-      >
-        <Input.Password />
-      </Form.Item>
-    </Form>
-  );
-};
-
-export default RegistrationForm;
+export default connect(
+  ({
+    boardSpace,
+  }: {
+    boardSpace: articleState;
+  }) => ({
+    boardSpace,
+  }),
+)(buckBoard);

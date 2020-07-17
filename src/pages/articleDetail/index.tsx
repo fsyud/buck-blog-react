@@ -15,6 +15,7 @@ import Comment from '@/components/comments/comment'
 import CommentList from '@/components/comments/list'
 import { commentsList } from '@/models/common.d'
 import { warnInfo } from '@/constant/_common'
+import BackTopCt from '@/components/backTop'
 import { isMobileOrPc, timestampToTime, sessionStorageGet } from '@/utils/tool/tool';
 import './marked.css'
 
@@ -173,6 +174,8 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
 
     this.state.StairComState = clone(data.comments);
 
+    console.log(data)
+
     this.state.toc = clone(data.toc);
 
     const user_id = this.state.UserSession
@@ -321,7 +324,7 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
         <div className={styles.l_content}>
           <div
             id="content"
-            className="article-detail"
+            className={styles.article_detail}
             dangerouslySetInnerHTML={{
               __html: this.state.articleState,
             }}
@@ -349,6 +352,7 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
           }}
           thirdCommentSend={SendThirdComment}
         />
+      <BackTopCt />
       </div>
     );
     const articleRight = (

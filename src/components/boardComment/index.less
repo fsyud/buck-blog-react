@@ -1,0 +1,47 @@
+.board_comment {
+  position: relative;
+  padding-top: 10px;
+  border-top: 1px solid #eee;
+
+  .author_logo {
+    position: absolute;
+    left: 10px;
+  }
+
+  .cur_author {
+    position: absolute;
+    color: #00965e;
+    font-weight: bold;
+    top: 10px;
+    width: 100px;
+    text-align: center;
+    left: -13px;
+    font-size: 13px;
+  }
+
+  .textarea {
+    padding: 10px 15px;
+    width: 100%;
+    height: 50px;
+    font-size: 13px;
+    border-radius: 4px;
+    resize: none;
+    display: inline-block;
+    vertical-align: top;
+    outline-style: none;
+  }
+
+  .write_function_block {
+    height: 50px;
+    margin-top: 20px;
+
+    :global {
+      .ant-btn-primary {
+        float: right;
+      }
+      .ant-btn-ghost {
+        float: right;
+      }
+    }
+  }
+}

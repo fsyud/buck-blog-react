@@ -6,6 +6,12 @@
 
 export default {
   dev: {
+    // '/api/': {
+    //   target: 'http://www.singlebuck.cn',
+    //   changeOrigin: true,
+    //   pathRewrite: { '^/api/': '' },
+    // },
+
     '/api/': {
       target: 'http://localhost:3000',
       changeOrigin: true,
