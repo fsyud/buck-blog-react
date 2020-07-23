@@ -11,33 +11,53 @@ interface basicCommentListProps {
   list: commentsList[];
   commentNumber: number;
   commentInfo: {
-    article: string;
+    article?: string;
     user: string;
   };
+  message?: boolean;
   thirdCommentSend: (val: thirdCommentInfo) => void;
 }
 const CommentList: FC<basicCommentListProps> = props => {
-  const { list, commentNumber, commentInfo, thirdCommentSend } = props;
+  const { list, commentNumber, commentInfo, thirdCommentSend, message } = props;
 
   const sendReply = (val: string, item: any, comment_id: string): void => {
     const { user_id, avatar, name, type } = item.user;
 
-    const thirdPam = {
-      user_id: commentInfo.user,
-      article_id: commentInfo.article,
+    const [
+      userId, userName
+    ]  =  [
+      user_id.length === 0 ? item._id : user_id,
+      name.length === 0 ? item.name : name
+    ]
+
+    let thirdPam = {
+      user_id: commentInfo.user ? commentInfo.user : '',
       comment_id: comment_id,
       content: val,
       to_user: {
-        user_id,
+        user_id: userId,
         avatar,
-        name,
+        name: userName,
         type,
       },
     };
+
+    const pam = message
+      ? thirdPam
+      : Object.assign({},thirdPam, { article_id: commentInfo.article } )
     if (thirdCommentSend) {
-      thirdCommentSend(thirdPam as thirdCommentInfo);
+      thirdCommentSend(pam as thirdCommentInfo);
     }
   };
+
+  const adminAvator = (pm: boolean | undefined, cur: any) => {
+    const el = <span className={styles.ant_author}>博主</span>
+    if(!pm) {
+      return cur.user.type === 0 ? el : ''
+    }else {
+      return cur.type === 0 ? el : ''
+    }
+  }
 
   return (
     <div className={styles.comment_list}>
@@ -47,7 +67,7 @@ const CommentList: FC<basicCommentListProps> = props => {
       {list.length > 0 ? (
         list.map(item => (
           <ReactCSSTransitionGroup
-            key={item.id}
+            key={item._id}
             transitionName="example"
             transitionAppear={true}
             transitionAppearTimeout={1000}
@@ -58,13 +78,13 @@ const CommentList: FC<basicCommentListProps> = props => {
               <div className={styles.item_header}>
                 <div className={styles.author}>
                   <div className={styles.avator}>
-                    <Avatar size={45} src={item.user.avatar} icon={<UserOutlined />} />
+                    <Avatar size={45} src={message ? item.avatar : item.user.avatar} icon={<UserOutlined />} />
                   </div>
                 </div>
                 <div className={styles.info}>
                   <div className={styles.name}>
-                    {item.user.name}
-                    {item.user.type === 0 ? <span className={styles.ant_author}>博主</span> : ''}
+                    {message ? item.name : item.user.name}
+                    {adminAvator(message, item)}
                   </div>
                   <div className={styles.time}>
                     {item.create_time ? timestampToTime(item.create_time, true) : ''}

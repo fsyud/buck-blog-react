@@ -350,6 +350,7 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
             article: query.article_id,
             user: user_id
           }}
+          message={false}
           thirdCommentSend={SendThirdComment}
         />
       <BackTopCt />

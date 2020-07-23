@@ -130,6 +130,11 @@ export interface commentsList {
   state: number;
   likes: number;
   is_top: boolean;
+  phone: string;
+  avatar: string;
+  introduce: string;
+  name: string
+  email: string
   user: {
     name: string;
     type: number;
@@ -256,3 +261,5 @@ export interface boardInfo {
     list: boardListItem[];
   };
 }
+
+// 留言板评论回复参数

@@ -5,7 +5,7 @@ export const RandomColor = [
 
 export const warnInfo = {
   login: '您还没登录,或者登录信息已过期，请重新登录！',
-  commentNull: '留言不为空哦！',
+  commentNull: '留言不能为空哦！',
   like: '点赞成功👍！'
 }
 
@@ -48,11 +48,11 @@ export const NavList = {
 
 export const boardText = [
   {
-    txt: '🎾 在自己的身上克服这个时代，克服它的混浊、粗粝、不近人情。',
+    txt: '在自己的身上克服这个时代，克服它的混浊、粗粝、不近人情。',
     key: '2'
   },
   {
-    txt: '⛳️ 你要比我更加相信，在这条光荣的荆棘路上，星星之火，可以燎原。',
+    txt: '你要比我更加相信，在这条光荣的荆棘路上，星星之火，可以燎原。',
     key: '4'
   }
 ]

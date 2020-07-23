@@ -1,12 +1,28 @@
 import request from '@/utils/request'
 
 import {
-  queryBoardParam
+  addMessageParam,
+  thirdMessageParam
 } from './data.d'
 
-export async function queryMessageList(params: queryBoardParam) {
+export async function queryMessageList(state: any) {
+  console.log(state)
   return request('/api/queryMessageList', {
     method: 'GET',
-    params
+    params: state
+  })
+}
+
+export async function addMessage(params: addMessageParam) {
+  return request('/api/addMessage', {
+    method: 'POST',
+    data: params
+  })
+}
+
+export async function addThirdMessage(params: thirdMessageParam) {
+  return request('/api/addThirdMessage', {
+    method: 'POST',
+    data: params
   })
 }

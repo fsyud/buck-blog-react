@@ -8,29 +8,11 @@ interface basicCommentProps {
   handleAddComment: (content: string) => void;
 }
 
-interface UserInfo {
-  name: string;
-  _id: string;
-}
-
 const BoardComment: FC<basicCommentProps> = (props) => {
 
   const { handleAddComment} = props;
 
-  const [ curUserInfo, setCurUserInfo] = useState<Partial<UserInfo>>({})
   const [ commentContent, setCommentContent ] = useState<string>('')
-
-  useEffect(() => {
-    if (window.sessionStorage.userInfo) {
-      const userInfo = JSON.parse(window.sessionStorage.userInfo);
-      setCurUserInfo(userInfo)
-    }
-  }, [])
-
-
-  useEffect(() => {
-
-  }, [])
 
   const submitComment = (): void => {
     if(handleAddComment) handleAddComment(commentContent)

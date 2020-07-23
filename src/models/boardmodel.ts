@@ -1,10 +1,14 @@
 import { Reducer } from 'redux';
 import { Effect } from 'dva';
-import { queryMessageList } from '@/service/boardservice';
-import { boardListItem, boardInfo} from './common.d';
+import {
+  queryMessageList,
+  addMessage,
+  addThirdMessage
+} from '@/service/boardservice';
+import { commentsList, boardInfo} from './common.d';
 
 export interface articleState {
-  list: boardListItem[];
+  list: commentsList[];
   info: Partial<boardInfo>;
 }
 
@@ -13,6 +17,8 @@ export interface ModelType {
   state: articleState;
   effects: {
     getMessageList: Effect;
+    addStairMessage: Effect;
+    addOtherMessage: Effect;
   };
   reducers: {
     getMeeage: Reducer<articleState>;
@@ -36,6 +42,20 @@ const Model: ModelType = {
         });
       }
     },
+    *addStairMessage({ payload }, { call, put }) {
+      const response = yield call(addMessage, payload);
+      yield put({
+        type: 'Info',
+        payload: response,
+      });
+    },
+    *addOtherMessage({ payload }, { call, put }) {
+      const response = yield call(addThirdMessage, payload);
+      yield put({
+        type: 'Info',
+        payload: response,
+      });
+    }
   },
   reducers: {
     getMeeage(state = { list: [], info: {} } , action) {

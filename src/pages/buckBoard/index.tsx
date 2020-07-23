@@ -1,76 +1,145 @@
-import React, { FC, useEffect } from 'react';
-import { connect } from 'dva'
+import React, { FC, useEffect, useState } from 'react';
+import { connect } from 'dva';
 import { Dispatch } from 'redux';
-import { Alert, Card } from 'antd'
-import { boardText, buckDesc, boardDesc} from '@/constant/_common'
-import BoardComment from '@/components/boardComment'
-import styles from './style.less'
+import { Alert, Card, message, Pagination } from 'antd';
+import { boardText, buckDesc, boardDesc } from '@/constant/_common';
+import BoardComment from '@/components/boardComment';
+import CommentList from '@/components/comments/list';
+import { sessionStorageGet } from '@/utils/tool/tool';
+import { warnInfo } from '@/constant/_common';
+import styles from './style.less';
+
+import { thirdCommentInfo } from '@/models/common.d';
 
 import { articleState } from '@/models/boardmodel';
-
-
 
 interface ListBasicListProps {
   boardSpace: articleState;
   dispatch: Dispatch;
 }
 
-export const buckBoard: FC<ListBasicListProps> = (props) => {
+export const buckBoard: FC<ListBasicListProps> = props => {
   const {
     dispatch,
-    boardSpace: { list }
+    boardSpace: { list, info },
   } = props;
 
 
-  const initList = (): void => {
+  const [userId, setUserId] = useState<string>('');
+  const [messageCount, setMessageCount] = useState<number>(0)
+  const [curPageNum, setCurPageNum] = useState<number>(1)
+  const [curPageSize, setCurPageSize] = useState<number>(10)
+
+  const initList = (num?: number, size?: number): void => {
     dispatch({
       type: 'boardSpace/getMessageList',
+      payload: {
+        // state: 1,
+        pageNum: num,
+        pageSize: size,
+      }
     });
-  }
+  };
 
   useEffect(() => {
-    initList()
+    initList(curPageNum, curPageSize);
+    const UserSession = sessionStorageGet('userInfo');
+    setUserId(UserSession ? UserSession['_id'] : '');
+  }, []);
 
-    console.log(list)
-  }, [])
+  useEffect(() => {
+    initList(curPageNum, curPageSize);
+  }, [curPageNum, curPageSize]);
 
-  const handleAddComment = (val: string): void => {
+  useEffect(() => {
+    let count = 0;
+    list.forEach(s => {
+      count += s.other_comments.length;
+    });
+    setMessageCount(list.length + count);
+  }, [list]);
 
+  useEffect(() => {
+    if(Object.keys(info).length > 0) {
+      message.info(info.message);
+      initList();
+    }
+  }, [info]);
+
+  const handleAddComment = (content: string): void => {
+    if (content.length === 0) {
+      message.info(warnInfo.commentNull);
+      return;
+    }
+    const curPam = {
+      user_id: userId,
+      content,
+    };
+
+    dispatch({
+      type: 'boardSpace/addStairMessage',
+      payload: curPam,
+    });
+  };
+
+  // 添加三级留言内容
+  const SendThirdComment = (val: thirdCommentInfo): void => {
+    const toUser = JSON.stringify(val.to_user);
+
+    if (val.content.length === 0) {
+      message.info(warnInfo.commentNull);
+      return;
+    }
+    const thirdParam = Object.assign({}, val, {to_user: toUser} )
+    console.log(thirdParam)
+    dispatch({
+      type: 'boardSpace/addOtherMessage',
+      payload: thirdParam
+    })
+  };
+
+  // 分页内容改变
+  const onChange = (page: any, pageSize: any) => {
+    console.log(page, pageSize)
+    setCurPageNum(page)
+    setCurPageSize(pageSize)
   }
 
-  return(
+  return (
     <div className={styles.board_message}>
-      {
-        boardText.map(el => (
-          <Alert key={el.key} message={el.txt} />
-        ))
-      }
+      {boardText.map(el => (
+        <Alert key={el.key} message={el.txt} />
+      ))}
       <div className={styles.title}>{boardDesc.titleOne}</div>
       <Card bordered={false} style={{ width: 300 }}>
-        {
-          buckDesc.map(el => (
-            <p key={el.key}>{el.txt}</p>
-          ))
-        }
+        {buckDesc.map(el => (
+          <p key={el.key}>{el.txt}</p>
+        ))}
       </Card>
       <div className={styles.title}>{boardDesc.titleTwo}</div>
-      <div className={styles.board_count}>
-        {list.length}条评论
-      </div>
-      <BoardComment
-        handleAddComment={handleAddComment}
+      <BoardComment handleAddComment={handleAddComment} />
+      <CommentList
+        list={list}
+        commentNumber={messageCount}
+        commentInfo={{
+          user: userId,
+        }}
+        message={true}
+        thirdCommentSend={SendThirdComment}
       />
 
+      <div className={styles.pagination}>
+        <Pagination
+          showQuickJumper
+          defaultCurrent={curPageNum}
+          total={list.length}
+          onChange={onChange}
+        />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default connect(
-  ({
-    boardSpace,
-  }: {
-    boardSpace: articleState;
-  }) => ({
-    boardSpace,
-  }),
-)(buckBoard);
+export default connect(({ boardSpace }: { boardSpace: articleState }) => ({
+  boardSpace,
+}))(buckBoard);

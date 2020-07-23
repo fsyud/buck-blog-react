@@ -46,3 +46,20 @@ export interface queryBoardParam {
   pageSize: number;
   state: number;
 }
+
+// 添加一级文章评论
+export interface addMessageParam {
+  name: string;
+  phone?: string;
+  user_id?: string;
+  content: string;
+  email?: string;
+}
+
+// 添加三级评论传递参数
+export interface thirdMessageParam {
+  user_id: string;
+  comment_id: string;
+  content: string;
+  to_user: string;
+}
