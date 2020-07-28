@@ -21,7 +21,7 @@ interface ListBasicListProps {
 export const buckBoard: FC<ListBasicListProps> = props => {
   const {
     dispatch,
-    boardSpace: { list, info },
+    boardSpace: { list, info, listCounts },
   } = props;
 
 
@@ -34,7 +34,7 @@ export const buckBoard: FC<ListBasicListProps> = props => {
     dispatch({
       type: 'boardSpace/getMessageList',
       payload: {
-        // state: 1,
+        state: 1,
         pageNum: num,
         pageSize: size,
       }
@@ -43,6 +43,7 @@ export const buckBoard: FC<ListBasicListProps> = props => {
 
   useEffect(() => {
     initList(curPageNum, curPageSize);
+
     const UserSession = sessionStorageGet('userInfo');
     setUserId(UserSession ? UserSession['_id'] : '');
   }, []);
@@ -100,7 +101,6 @@ export const buckBoard: FC<ListBasicListProps> = props => {
 
   // 分页内容改变
   const onChange = (page: any, pageSize: any) => {
-    console.log(page, pageSize)
     setCurPageNum(page)
     setCurPageSize(pageSize)
   }
@@ -132,7 +132,7 @@ export const buckBoard: FC<ListBasicListProps> = props => {
         <Pagination
           showQuickJumper
           defaultCurrent={curPageNum}
-          total={list.length}
+          total={listCounts}
           onChange={onChange}
         />
       </div>

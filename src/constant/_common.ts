@@ -9,6 +9,11 @@ export const warnInfo = {
   like: '点赞成功👍！'
 }
 
+export const userinfo = {
+  name: 'buck',
+  signature: '路漫漫其修远兮'
+}
+
 export const NavList = {
   types: '1',
   state: true,

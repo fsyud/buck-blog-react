@@ -10,6 +10,7 @@ import { commentsList, boardInfo} from './common.d';
 export interface articleState {
   list: commentsList[];
   info: Partial<boardInfo>;
+  listCounts: number;
 }
 
 export interface ModelType {
@@ -23,6 +24,7 @@ export interface ModelType {
   reducers: {
     getMeeage: Reducer<articleState>;
     Info: Reducer<articleState>;
+    counts: Reducer<articleState>;
   };
 }
 
@@ -30,7 +32,8 @@ const Model: ModelType = {
   namespace: 'boardSpace',
   state: {
     list: [],
-    info: {}
+    info: {},
+    listCounts: 0
   },
   effects: {
     *getMessageList({ payload }, { call, put }) {
@@ -39,6 +42,11 @@ const Model: ModelType = {
         yield put({
           type: 'getMeeage',
           payload: response.data.list || [],
+        });
+
+        yield put({
+          type: 'counts',
+          payload: response.data.count || 0,
         });
       }
     },
@@ -58,16 +66,22 @@ const Model: ModelType = {
     }
   },
   reducers: {
-    getMeeage(state = { list: [], info: {} } , action) {
+    getMeeage(state = { listCounts: 0, list: [], info: {} } , action) {
       return {
         ...state,
         list: action.payload,
       };
     },
-    Info(state = { list: [], info: {} }, action) {
+    Info(state = { listCounts: 0, list: [], info: {} }, action) {
       return {
         ...state,
         info: action.payload,
+      };
+    },
+    counts(state = { listCounts: 0, list: [], info: {} }, action) {
+      return {
+        ...state,
+        listCounts: action.payload,
       };
     },
   },

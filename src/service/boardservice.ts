@@ -6,7 +6,6 @@ import {
 } from './data.d'
 
 export async function queryMessageList(state: any) {
-  console.log(state)
   return request('/api/queryMessageList', {
     method: 'GET',
     params: state
