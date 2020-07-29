@@ -11,7 +11,35 @@ export const warnInfo = {
 
 export const userinfo = {
   name: 'buck',
-  signature: '路漫漫其修远兮'
+  signature: '路漫漫其修远兮',
+  title: '全栈',
+  city: '上海市',
+  tags: [
+    {
+      key: '0',
+      label: '很有想法的',
+    },
+    {
+      key: '1',
+      label: '专注技术',
+    },
+    {
+      key: '2',
+      label: '热衷力扣',
+    },
+    {
+      key: '3',
+      label: '幽默',
+    },
+    {
+      key: '4',
+      label: '开朗',
+    },
+    {
+      key: '5',
+      label: '爱运动',
+    },
+  ],
 }
 
 export const NavList = {
