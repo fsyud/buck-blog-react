@@ -92,7 +92,6 @@ export const buckBoard: FC<ListBasicListProps> = props => {
       return;
     }
     const thirdParam = Object.assign({}, val, {to_user: toUser} )
-    console.log(thirdParam)
     dispatch({
       type: 'boardSpace/addOtherMessage',
       payload: thirdParam
@@ -131,7 +130,8 @@ export const buckBoard: FC<ListBasicListProps> = props => {
       <div className={styles.pagination}>
         <Pagination
           showQuickJumper
-          defaultCurrent={curPageNum}
+          defaultCurrent={1}
+          current={curPageNum}
           total={listCounts}
           onChange={onChange}
         />

@@ -126,7 +126,7 @@ const RegisterModal: FC<OperationModalProps> = (props) => {
           label="密码"
           rules={[{ required: true, message: '请输入密码' }]}
         >
-          <Input placeholder="请输入密码" />
+          <Input type="password" placeholder="请输入密码" />
         </FormItem>
         <UserPhoneItem act={action}/>
         <UserIntroduceItem act={action}/>
