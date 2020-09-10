@@ -3,11 +3,7 @@
   "scripts": {
     "start": "umi dev",
     "build": "umi build",
-    "test": "umi test",
-    "lint:es": "eslint --ext .js,.jsx,.ts,.tsx src mock",
-    "lint:ts": "tslint \"src/**/*.ts\" \"src/**/*.tsx\"",
-    "precommit": "lint-staged",
-    "lint:style": "stylelint --fix \"src/**/*.less\" --syntax less"
+    "test": "umi test"
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.1",

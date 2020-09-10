@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Result,  Spin} from 'antd';
+import { Spin } from 'antd';
+import styles from '@/layouts/index.less'
 
 class Users extends Component<{}> {
   render() {
     return (
-      <div>
-        <Spin />
+      <div className={styles.noPage}>
+        <Spin size="large" />
       </div>
     )
   }

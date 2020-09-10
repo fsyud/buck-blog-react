@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Layout, Spin, notification, Avatar, Button, message
+  notification, Avatar, Button, message, Skeleton, Affix
 } from 'antd';
 import isEqual from 'lodash/isEqual'
 import { TagOutlined, GithubOutlined, LikeOutlined } from '@ant-design/icons';
@@ -30,13 +30,13 @@ import author from '@/assets/avatar/cat.png';
 import styles from './index.less';
 import './marked.css';
 
-const { Sider } = Layout;
-
-// define sider spin
-const siderSpin = (
-  <Sider className={styles.siderSpin}>
-    <Spin size="large" />
-  </Sider>
+// define skeleton
+const articleSkeleton = (
+  <Skeleton
+    className={styles.siderSkeleton}
+    avatar={true}
+    paragraph={{ rows: 4 }}
+  />
 );
 
 interface basicArticleDetailProps extends ConnectProps {
@@ -156,8 +156,6 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
     }
   }
 
-
-
   render() {
     const {
       articleDetailList: { data },
@@ -168,13 +166,11 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
 
     const curData = data && Object.keys(data).length === 0;
 
-    if (!data || curData) return siderSpin;
+    if (!data || curData) return articleSkeleton;
 
     this.state.articleState = clone(data.content);
 
     this.state.StairComState = clone(data.comments);
-
-    console.log(data)
 
     this.state.toc = clone(data.toc);
 
@@ -358,18 +354,20 @@ class ArticleDetail extends Component<basicArticleDetailProps, basicArticleDetai
     );
     const articleRight = (
       <div className={styles.article_right}>
-      {!isMobileOrPc()? (
-        <div
-          className={styles.toc_index}
-          dangerouslySetInnerHTML={{
-            __html: this.state.toc
-          }}
-        />
-      ) : (
-        <div></div>
-      )}
+        <Affix offsetTop={0}>
+          {!isMobileOrPc() ? (
+            <div
+              className={styles.toc_index}
+              dangerouslySetInnerHTML={{
+                __html: this.state.toc,
+              }}
+            />
+          ) : (
+            <div></div>
+          )}
+        </Affix>
       </div>
-    )
+    );
 
     return (
       <div className={styles.article}>

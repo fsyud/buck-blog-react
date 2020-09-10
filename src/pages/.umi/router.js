@@ -8,7 +8,7 @@ import {
 import dynamic from 'umi/dynamic';
 import renderRoutes from 'umi/lib/renderRoutes';
 import history from '@@/history';
-import RendererWrapper0 from '/Volumes/WorkSpace/Buck-blog-react/src/pages/.umi/LocaleWrapper.jsx';
+import RendererWrapper0 from '/Volumes/WorkSpace/Private/buck-blog-react/src/pages/.umi/LocaleWrapper.jsx';
 import { routerRedux } from 'dva';
 
 const Router = routerRedux.ConnectedRouter;
@@ -84,7 +84,7 @@ const routes = [
       {
         component: () =>
           React.createElement(
-            require('/Volumes/WorkSpace/Buck-blog-react/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+            require('/Volumes/WorkSpace/Private/buck-blog-react/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
               .default,
             { pagesPath: 'src/pages', hasRoutesInConfig: false },
           ),
@@ -98,7 +98,7 @@ const routes = [
   {
     component: () =>
       React.createElement(
-        require('/Volumes/WorkSpace/Buck-blog-react/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
+        require('/Volumes/WorkSpace/Private/buck-blog-react/node_modules/umi-build-dev/lib/plugins/404/NotFound.js')
           .default,
         { pagesPath: 'src/pages', hasRoutesInConfig: false },
       ),

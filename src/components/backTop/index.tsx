@@ -7,9 +7,8 @@ const BackTopCt: FC<{}> = () => {
   return (
     <div className={styles.back_top}>
       <BackTop>
-        <VerticalAlignTopOutlined />
         <div className={styles.tops}>
-          返回顶部
+          <VerticalAlignTopOutlined />
         </div>
       </BackTop>
     </div>

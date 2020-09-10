@@ -32,7 +32,7 @@ defaultAntd = defaultAntd.default || defaultAntd;
 const localeInfo = {
   'en-US': {
     messages: {
-      ...((locale) => locale.__esModule ? locale.default : locale)(require('/Volumes/WorkSpace/Buck-blog-react/src/locales/en-US.ts')),
+      ...((locale) => locale.__esModule ? locale.default : locale)(require('/Volumes/WorkSpace/Private/buck-blog-react/src/locales/en-US.ts')),
     },
     locale: 'en-US',
     antd: require('antd/es/locale-provider/en_US'),
